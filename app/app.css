@@ -3,13 +3,30 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --color-primary: oklch(22.499% 0.03465 288.37);
+    --color-primary-50: oklch(75.016% 0.05145 290.19);
+    --color-primary-100: oklch(71.118% 0.05943 290.39);
+    --color-primary-200: oklch(63.208% 0.07901 289.11);
+    --color-primary-300: oklch(55.313% 0.09662 287.16);
+    --color-primary-400: oklch(48.402% 0.09635 287.49);
+    --color-primary-500: oklch(42.344% 0.08174 287.88);
+    --color-primary-600: oklch(36.027% 0.06814 287.03);
+    --color-primary-700: oklch(29.456% 0.05205 287.49);
+    --color-primary-800: oklch(22.499% 0.03465 288.37);
+    --color-primary-900: oklch(18.961% 0.02416 287.67);
+    --color-primary-950: oklch(17.024% 0.02069 288.58);
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+      @apply bg-white dark:bg-primary-950;
+    font-family: "Lato", sans-serif;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+h1, h2, h3 {
+    font-family: "Exo 2", sans-serif;
 }
