@@ -1,10 +1,18 @@
+import { useEffect } from "react";
+import { ThreeDMe } from "~/components/3DMe";
+import { useGetRandomBoolean } from "~/hooks/useGetRandomBoolean";
+
 export function Welcome() {
+    const random = useGetRandomBoolean();
     return (
         <>
             <header className="flex items-center justify-center pt-16 pb-4">
                 <h1 className="font-bold text-4xl">Álvaro López Álvarez</h1>
             </header>
-            <main className="container flex justify-center items-center">
+            <main className="relative container flex justify-center items-center">
+                <div className="absolute right-8 top-40">
+                    {random ? <ThreeDMe action="lookAt" lookAt="right" /> : <ThreeDMe jump />}
+                </div>
                 <div className="flex flex-col p-8 rounded-lg min-w-xl max-w-xl bg-primary-800 shadow-md gap-2">
                     <h2 className="text-xl">Computer Science Developer</h2>
                     <p className="text-md ">
