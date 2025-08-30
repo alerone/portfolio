@@ -1,15 +1,13 @@
-import { useEffect } from "react";
 import { ThreeDMe } from "~/components/3DMe";
+import { Page } from "~/components/Page";
 import { useGetRandomBoolean } from "~/hooks/useGetRandomBoolean";
 
 export function Welcome() {
+    const title = "Álvaro López Álvarez"
     const random = useGetRandomBoolean();
     return (
         <>
-            <header className="flex items-center justify-center pt-16 pb-4">
-                <h1 className="font-bold text-4xl">Álvaro López Álvarez</h1>
-            </header>
-            <main className="relative container flex justify-center items-center">
+            <Page headerTitle={title}>
                 <div className="absolute right-8 top-40">
                     {random ? <ThreeDMe action="lookAt" lookAt="right" /> : <ThreeDMe jump />}
                 </div>
@@ -30,7 +28,7 @@ export function Welcome() {
                         Senior Developer with extensive expertise.
                     </p>
                 </div>
-            </main>
+            </Page>
         </>
     );
 }

@@ -53,7 +53,7 @@ export default function App() {
     return (
         <div className="min-h-[105vh] flex flex-col">
             <SiteHeader />
-            <main className="container mx-auto p-4 flex-1 pb-20">
+            <main className="container mx-auto p-4 flex-1 pb-24">
                 <Outlet />
             </main>
             <SiteFooter isVisible={isVisible} />

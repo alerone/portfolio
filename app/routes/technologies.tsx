@@ -1,10 +1,13 @@
-export function meta({}: Route.MetaArgs) {
+import { TechnologiesPage } from "~/features/technologies/TechnologiesPage";
+import type { Route } from "./+types/technologies";
+
+export function meta({ }: Route.MetaArgs) {
     return [
-        { title: "New React Router App" },
-        { name: "description", content: "Welcome to React Router!" },
+        { title: "Technologies - Portfolio" },
+        { name: "technologies", content: "All the technologies I know!" },
     ];
 }
 
 export default function Technologies() {
-    return <h1>HOLA</h1>;
+    return <TechnologiesPage />
 }

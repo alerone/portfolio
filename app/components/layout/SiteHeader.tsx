@@ -10,6 +10,7 @@ export function SiteHeader() {
                     <NavButton isEnd to="/" label="Home" />
                     <NavButton to="/technologies" label="Technologies" />
                     <NavButton to="/projects" label="Projects" />
+                    <NavButton to="/experience" label="Experience" />
                 </div>
             </nav>
         </header>

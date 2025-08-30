@@ -1,7 +1,10 @@
-import resources from "~/resources/resources";
+import { getSVGResource } from "~/resources/resources";
 import { Icon } from "../Icon";
+import { IconHref } from "../IconHref";
 
 export function SiteFooter({ isVisible }: { isVisible: boolean }) {
+    const react = getSVGResource("react")
+    const github = getSVGResource("github")
     return (
         <footer
             className={`
@@ -13,10 +16,10 @@ export function SiteFooter({ isVisible }: { isVisible: boolean }) {
         >
             <div className="px-16 p-4 container flex flex-col opacity-70">
                 <p className="text-sm">
-                    Made with <Icon icon={resources.react} label="React" />
+                    Made with <IconHref icon={react} href={react.href} label="React" />
                 </p>
                 <p className="text-sm">
-                    Hosted in <Icon icon={resources.github} label="Github Pages" />
+                    Hosted in <IconHref icon={github} href={github.href} label="Github Pages" />
                 </p>
                 <p className="text-sm">
                     @ {new Date().getFullYear()} Álvaro López Álvarez. Todos los derechos reservados

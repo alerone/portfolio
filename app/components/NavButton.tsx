@@ -6,7 +6,7 @@ type NavButtonProps = {
     isEnd?: boolean
 }
 export function NavButton({ to, label, isEnd }: NavButtonProps) {
-    const linkBase = `px-2 py-1 rounded-lg bg-primary-300 text-sm font-medium transition-opacity  duration-300`
+    const linkBase = `px-2 py-1 rounded-lg bg-primary-300 text-sm font-medium transition-all hover:scale-95   duration-300`
     return (
         <NavLink
             to={to}
