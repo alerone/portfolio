@@ -25,7 +25,7 @@ type AlvaroProps = {
 function AlvaroModel({ action = "hi", jump = false, lookAt = "front" }: AlvaroProps) {
     const speed = 0.02;
     const group = useRef<THREE.Group>(null!);
-    const url = "/models/alvaro.glb";
+    const url = "/portfolio/models/alvaro.glb";
     const { scene, animations } = useGLTF(url);
     const { actions } = useAnimations(animations, group);
 

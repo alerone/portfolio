@@ -7,7 +7,7 @@
     "dev": "REACT_ROUTER_ENV=dev react-router dev",
     "build-prod": "REACT_ROUTER_ENV=prod react-router build",
     "build": "REACT_ROUTER_ENV=dev react-router build",
-    "preview": "vite preview",
+    "preview": "REACT_ROUTER_ENV=prod vite preview",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },
