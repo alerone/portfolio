@@ -1,7 +1,8 @@
 import type { Config } from "@react-router/dev/config";
 
+const BASE = process.env.REACT_ROUTER_ENV === "prod" ? "/portfolio" : "/";
+
 export default {
-    // Config options...
-    // Server-side render by default, to enable SPA mode set this to `false`
     ssr: false,
+    basename: BASE,
 } satisfies Config;
