@@ -1,10 +1,13 @@
 {
   "name": "portfolio",
+  "homepage": "https://alerone.github.io/portfolio",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev",
+    "dev": "REACT_ROUTER_ENV=dev react-router dev",
+    "build-prod": "REACT_ROUTER_ENV=prod react-router build",
+    "build": "REACT_ROUTER_ENV=dev react-router build",
+    "preview": "vite preview",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },
