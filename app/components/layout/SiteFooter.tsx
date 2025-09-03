@@ -13,7 +13,7 @@ export function SiteFooter({ isVisible }: { isVisible: boolean }) {
             ${isVisible ? "translate-y-0" : "translate-y-full"}
         `}
         >
-            <div className="px-16 p-4 container flex flex-col opacity-70">
+            <div className="xl:px-16 p-4 container flex flex-col opacity-70">
                 <p className="text-sm">
                     Made with <IconHref icon={react} href={react.href} label="React" />
                 </p>
@@ -21,7 +21,7 @@ export function SiteFooter({ isVisible }: { isVisible: boolean }) {
                     Hosted in <IconHref icon={github} href={github.href} label="Github Pages" />
                 </p>
                 <p className="text-sm">
-                    @ {new Date().getFullYear()} Álvaro López Álvarez. Todos los derechos reservados
+                    @{new Date().getFullYear()} Álvaro López Álvarez. All rights reserved
                 </p>
             </div>
         </footer>
