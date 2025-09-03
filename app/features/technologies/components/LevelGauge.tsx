@@ -11,7 +11,7 @@ export function LevelGauge({ level }: { level: LevelValues }) {
     const currentLevel = levels[level]
     const isMounted = useIsMounted()
     return (
-        <div className="w-sm flex flex-row gap-2 opacity-90">
+        <div className="w-xs xl:w-sm flex flex-row gap-2 opacity-90">
             <div className={`bg-gradient-to-r ${currentLevel.color} ${currentLevel.width} 
                         rounded-lg h-full transition-all transform origin-left ease-out duration-1000 px-2
                         ${isMounted ? "scale-x-100" : "scale-x-0"}`}

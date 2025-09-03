@@ -1,17 +1,23 @@
 import { ThreeDMe } from "~/components/3DMe";
 import { Page } from "~/components/Page";
 import { useGetRandomBoolean } from "~/hooks/useGetRandomBoolean";
+import { useIsDesktop } from "~/hooks/useIsDesktop";
 
 export function Welcome() {
     const title = "Álvaro López Álvarez"
     const random = useGetRandomBoolean();
+    const isDesktop = useIsDesktop()
     return (
         <>
             <Page headerTitle={title}>
                 <div className="absolute right-8 top-40">
-                    {random ? <ThreeDMe action="lookAt" lookAt="right" /> : <ThreeDMe jump />}
+                    {isDesktop &&
+                        <>
+                            {random ? <ThreeDMe action="lookAt" lookAt="right" /> : <ThreeDMe jump />}
+                        </>
+                    }
                 </div>
-                <div className="flex flex-col p-8 rounded-lg min-w-xl max-w-xl bg-primary-800 shadow-md gap-2">
+                <div className="flex flex-col p-8 rounded-lg w-11/12 xl:w-xl bg-primary-800 shadow-md gap-2">
                     <h2 className="text-xl">Computer Science Developer</h2>
                     <p className="text-md ">
                         I am a passionate developer currently pursuing a Master's in Computer

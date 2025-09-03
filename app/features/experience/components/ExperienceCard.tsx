@@ -32,7 +32,7 @@ export function ExperienceCard({ experience }: { experience: WorkExperience }) {
             </div>
             <p className="text-white text-md mb-4">{experience.description}</p>
             {experience.keywords && experience.keywords.length > 0 &&
-                <div className="gap-2 flex flex-row overflow-x-auto whitespace-nowrap max-w-full scrollbar-hide max-h-[40px]">
+                <div className="gap-2 flex flex-row flex-wrap  max-w-full scrollbar-hide">
                     {experience.keywords.map((keyword: string) => (
                         <span className="opacity-70 bg-gradient-to-tr font-bold from-primary-600 via-primary-300 to-primary-600 shadow-sm py-1 px-2 rounded-lg text-sm text-slate-100">{keyword}</span>
                     ))}

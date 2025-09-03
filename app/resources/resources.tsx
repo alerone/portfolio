@@ -1,4 +1,5 @@
 import type { SVGProps } from "react";
+import { href } from "react-router";
 
 export type IconResource = {
     href: string;
@@ -358,6 +359,34 @@ const svgResource = {
                         data-name="Rect\xE1ngulo 35"
                     />
                 </g>
+            </svg>
+        )
+    },
+    menu: {
+        href: "",
+        icon: (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                fill="#e3e3e3"
+                viewBox="0 -960 960 960"
+            >
+                <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+            </svg>
+        )
+    },
+    close: {
+        href: "",
+        icon: (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                fill="#e3e3e3"
+                viewBox="0 -960 960 960"
+            >
+                <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
             </svg>
         )
     }

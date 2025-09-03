@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "REACT_ROUTER_ENV=dev react-router dev",
+    "dev": "REACT_ROUTER_ENV=prod react-router dev",
     "build-prod": "REACT_ROUTER_ENV=prod react-router build",
     "build": "REACT_ROUTER_ENV=dev react-router build",
     "preview": "REACT_ROUTER_ENV=prod vite preview",
@@ -21,7 +21,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.7.1",
-    "three": "^0.179.1"
+    "three": "^0.179.1",
+    "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
     "@react-router/dev": "^7.7.1",
