@@ -49,7 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-    const isVisible = useScrollVisibility(5);
+    const isVisible = useScrollVisibility(0.97);
     return (
         <div className="min-h-[105vh] flex flex-col">
             <SiteHeader />

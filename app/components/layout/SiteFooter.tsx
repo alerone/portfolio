@@ -1,5 +1,4 @@
 import { getSVGResource } from "~/resources/resources";
-import { Icon } from "../Icon";
 import { IconHref } from "../IconHref";
 
 export function SiteFooter({ isVisible }: { isVisible: boolean }) {
