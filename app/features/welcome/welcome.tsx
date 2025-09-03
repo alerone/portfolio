@@ -9,7 +9,7 @@ export function Welcome() {
     const isDesktop = useIsDesktop()
     return (
         <>
-            <Page headerTitle={title}>
+            <Page headerTitle={title} className="xl:pb-0 pb-4">
                 <div className="absolute right-8 top-40">
                     {isDesktop &&
                         <>
