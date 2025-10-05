@@ -68,9 +68,10 @@ export const projectList: Record<string, Project> = {
         id: "a0173d61-bbb5-4186-a52d-4118c0dc791f",
         name: "Limpieza del piso",
         githubHref: "https://github.com/alerone/limpieza",
+        webHref: "https://limpiezapiso-cb761.web.app/",
         summary: "This project is a web application to manage the cleaning tasks of me and my roommates.",
         description: "This project is an implementation of a task application with OAuth 2.0 as the authentication method. The application utilices docker to launch the database with the task application. In this project you can authenticate yourself via Google authentication. The authenticated user can use some features of Google like Google Drive.",
-        technologies: ["react", "firebase", "oauth", "github"],
+        technologies: ["react", "firebase", "oauth", "github", "tailwind"],
         status: "Future work"
     },
     goInterpreter: {
@@ -83,6 +84,16 @@ export const projectList: Record<string, Project> = {
             Parser This parser is a tree-walking parser. The parser creates a Abstract Syntax Tree (AST). It's called abstract because some details visible in the source code are omitted in the AST (semicolons, spaces, newlines,...). This parser is a top down operator precedence parser, sometimes called "Pratt parser", after its inventor Vaughan Pratt. This parser makes learning about making an interpreter something fun! 🥳🎉
             Evaluator What makes a programming language come to life from source code is a good Evaluator. When the interpreter walks by the parsing tree it evaluates every node thanks to the evaluator so an integer returns an Object.Integer, an expression, a statement is evaluated and so on. The evaluator makes the source code execute and return objects from the object system of the programming language.`,
         technologies: ["go"],
+        status: "Finished"
+    },
+    ragcourse: {
+        id: "cb46cf44-4479-442d-9345-8c5fe3b01b88",
+        name: "RAG Course – Building Retrieval-Augmented Generation Systems",
+        githubHref: "https://github.com/alerone/rag-course",
+        image: "images/rag-course.jpg",
+        summary: "This repository contains the complete code and lessons from a hands-on RAG (Retrieval-Augmented Generation) course, developed step by step with the assistance of ChatGPT. The course covers the main concepts and practical techniques behind modern RAG systems — from vector embeddings and FAISS indexing to re-ranking, vector databases, and LangChain chunking.",
+        description: ``,
+        technologies: ["python", "faiss", "sentence-transformers", "langchain", "openaiapi"],
         status: "Finished"
     }
 }

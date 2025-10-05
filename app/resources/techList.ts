@@ -146,6 +146,16 @@ export const techList: Record<string, Technology> = {
         level: 3,
         keywords: ["3D graphics", "shaders", "Materials", "Objects", "3D Camera"]
     },
+    "tailwind": {
+        id: "02f65efc-5755-479d-8e5f-b36788eca402",
+        name: "Tailwind",
+        href: "https://tailwindcss.com/",
+        description: `Tailwind CSS is a utility-first CSS framework that lets you style web applications by applying small, reusable classes directly in HTML instead of writing custom CSS rules.
+                It emphasizes rapid development, consistency, and responsive design, allowing developers to build modern, visually appealing interfaces without leaving the markup.`,
+        icon: "tailwind",
+        level: 3,
+        keywords: ["css", "style", "colors", "classes"]
+    },
     "pokeApi": {
         id: "8bd4b617-be46-4b37-999f-37da674bf7b2",
         name: "Poke API",
@@ -154,7 +164,41 @@ export const techList: Record<string, Technology> = {
         level: 3,
         dontShow: true,
         keywords: []
-    }
+    },
+    "faiss": {
+        id: "9e21d5bb-3dc8-4f28-a3b2-45130de15ec7",
+        name: "FAISS",
+        href: "https://faiss.ai/",
+        description: "Facebook AI Similarity Search — a vector database library designed for similarity search and clustering of dense vectors.",
+        level: 1,
+        keywords: ["vector indexing", "nearest neighbor search"]
+    },
+    "sentence-transformers": {
+        id: "8b50b0c0-b835-4e14-990d-f4c6e6859e5a",
+        name: "Sentence-Transformers",
+        href: "https://python.langchain.com/docs/integrations/text_embedding/sentence_transformers/",
+        description: "A Python framework for creating semantic embeddings from text using Transformer models like BERT or Re-ranking with CrossEncoders",
+        level: 2,
+        keywords: ["embeddings", "Semantic similarity", "NLP models"]
+    },
+    "langchain": {
+        id: "2bca4de7-37fc-42d0-afa8-5813599eec4c",
+        name: "LangChain",
+        icon: "langchain",
+        href: "https://www.langchain.com/",
+        description: "A framework that helps build LLM-powered applications, connecting language models with data sources, tools, and memory.",
+        level: 1,
+        keywords: ["prompt chaining", "semantic chunking"]
+    },
+    "openaiapi": {
+        id: "cdfa83a1-b178-48c3-8a60-8bb32f3fa4af",
+        name: "OpenAI API",
+        icon: "openai",
+        href: "https://openai.com/api/",
+        description: "The OpenAI API that provides access to GPT models for text generation, conversation, and reasoning.",
+        level: 1,
+        keywords: ["llm", "api", "text generation"]
+    },
 }
 
 export type TechKey = keyof typeof techList
