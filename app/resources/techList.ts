@@ -187,7 +187,7 @@ export const techList: Record<string, Technology> = {
         icon: "langchain",
         href: "https://www.langchain.com/",
         description: "A framework that helps build LLM-powered applications, connecting language models with data sources, tools, and memory.",
-        level: 1,
+        level: 0,
         keywords: ["prompt chaining", "semantic chunking"]
     },
     "openaiapi": {

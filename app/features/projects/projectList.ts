@@ -61,7 +61,7 @@ export const projectList: Record<string, Project> = {
         githubHref: "https://github.com/alerone/OAuthRSE",
         summary: "This project is an implementation of a task application with OAuth 2.0 as the authentication method.",
         description: "This project is an implementation of a task application with OAuth 2.0 as the authentication method. The application utilices docker to launch the database with the task application. In this project you can authenticate yourself via Google authentication. The authenticated user can use some features of Google like Google Drive.",
-        technologies: ["go", "python", "oauth", "flask"],
+        technologies: ["python", "oauth", "flask"],
         status: "Finished"
     },
     limpieza: {
@@ -91,7 +91,7 @@ export const projectList: Record<string, Project> = {
         name: "RAG Course – Building Retrieval-Augmented Generation Systems",
         githubHref: "https://github.com/alerone/rag-course",
         image: "images/rag-course.jpg",
-        summary: "This repository contains the complete code and lessons from a hands-on RAG (Retrieval-Augmented Generation) course, developed step by step with the assistance of ChatGPT. The course covers the main concepts and practical techniques behind modern RAG systems — from vector embeddings and FAISS indexing to re-ranking, vector databases, and LangChain chunking.",
+        summary: "This repository contains the complete code and lessons from a hands-on RAG (Retrieval-Augmented Generation) course, developed step by step with the assistance of ChatGPT.",
         description: ``,
         technologies: ["python", "faiss", "sentence-transformers", "langchain", "openaiapi"],
         status: "Finished"

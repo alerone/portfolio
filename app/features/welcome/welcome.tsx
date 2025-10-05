@@ -22,9 +22,7 @@ export function Welcome() {
                     <p className="text-md ">
                         I am a passionate developer currently pursuing a Master's in Computer
                         Engineering at the
-                        <UPV />. I completed my Bachelor's degree at the same university with a GPA
-                        of 8.8.
-                        <br /> <br />
+                        <UPV />. I completed my university career with an average grade of 8.9<br /><br />
                         I have a strong vocation for programming and a constant desire to learn
                         emerging technologies and languages. I spend much of my time building small
                         projects to enhance my coding skills. While I enjoy working on Backend

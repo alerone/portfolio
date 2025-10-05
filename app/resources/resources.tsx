@@ -1,5 +1,4 @@
 import type { SVGProps } from "react";
-import { href } from "react-router";
 
 export type IconResource = {
     href: string;

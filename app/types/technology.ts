@@ -1,6 +1,6 @@
 import type { SVGResourceKey } from "~/resources/resources"
 
-export type LevelValues = 1 | 2 | 3 | 4
+export type LevelValues = 0 | 1 | 2 | 3 | 4
 export type Technology = {
     id: string,
     name: string

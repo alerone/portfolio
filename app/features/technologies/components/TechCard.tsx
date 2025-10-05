@@ -19,7 +19,7 @@ export function TechCard({ technology }: { technology: Technology }) {
                     <h2 className="text-white whitespace-nowrap font-semibold text-lg">{technology.name}</h2>
                 </div>
                 {technology.keywords && technology.keywords.length > 0 &&
-                    <div className="gap-2 flex flex-row overflow-x-auto whitespace-nowrap max-w-full scrollbar-hide max-h-[40px]">
+                    <div className="gap-2 flex flex-row overflow-x-auto whitespace-nowrap max-w-full  max-h-[40px]">
                         {technology.keywords.map((keyword: string) => (
                             <span className="opacity-85 bg-primary-600 py-1 px-2 rounded-lg text-sm text-slate-100">{keyword}</span>
                         ))}
