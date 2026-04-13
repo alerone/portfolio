@@ -1,8 +1,8 @@
 import { useMediaQuery } from "usehooks-ts";
-import { NavButton } from "~/components/NavButton";
-import { PortfolioTitle } from "~/components/PortfolioTitle";
+import { NavButton } from "@/components/NavButton";
+import { PortfolioTitle } from "@/components/PortfolioTitle";
 import { Drawer } from "./Drawer";
-import { useIsDesktop } from "~/hooks/useIsDesktop";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function SiteHeader() {
     const isDesktop = useIsDesktop()

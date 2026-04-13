@@ -1,11 +1,16 @@
-import { cloneElement } from "react";
-import type { IconResource } from "~/resources/resources";
+import { cloneElement, type ReactElement } from "react";
+import type { IconResource } from "@/resources/logos";
+
+type IconLike = {
+    href?: string;
+    icon: ReactElement;
+}
 
 type IconHrefProps = {
     height?: number;
     width?: number;
     label?: string;
-    icon: IconResource;
+    icon: IconLike
     href: string;
     iconFirst?: boolean
 };

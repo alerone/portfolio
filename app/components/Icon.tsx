@@ -1,12 +1,16 @@
-import { cloneElement } from "react";
-import type { IconResource } from "~/resources/resources";
+import { cloneElement, type ReactElement } from "react";
+import type { IconResource } from "@/resources/logos";
+
+type IconLike = {
+    icon: ReactElement
+}
 
 type IconProps = {
     height?: number;
     width?: number;
     label?: string;
-    icon: IconResource;
-    iconFirst?: boolean
+    icon: IconLike;
+    iconFirst?: boolean;
 };
 
 export function Icon({ height = 24, width = 24, icon, label, iconFirst }: IconProps) {

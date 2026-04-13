@@ -1,4 +1,4 @@
-import { TechnologiesPage } from "~/features/technologies/TechnologiesPage";
+import { TechnologiesPage } from "@/features/technologies/TechnologiesPage";
 import type { Route } from "./+types/technologies";
 
 export function meta({ }: Route.MetaArgs) {

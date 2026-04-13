@@ -1,9 +1,10 @@
-import { getSVGResource } from "~/resources/resources";
+import { getLogo } from "@/resources/logos";
 import { IconHref } from "../IconHref";
 
+
 export function SiteFooter({ isVisible }: { isVisible: boolean }) {
-    const react = getSVGResource("react")
-    const github = getSVGResource("github")
+    const react = getLogo("react")
+    const github = getLogo("github")
     return (
         <footer
             className={`
