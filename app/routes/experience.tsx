@@ -1,5 +1,5 @@
 import type { Route } from "./+types/projects";
-import { ExperiencePage } from "~/features/experience/ExperiencePage";
+import { ExperiencePage } from "@/features/experience/ExperiencePage";
 
 export function meta({ }: Route.MetaArgs) {
     return [

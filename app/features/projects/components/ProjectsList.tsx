@@ -1,4 +1,4 @@
-import type { Project } from "../types";
+import type { Project } from "@/content/content-types";
 import { ProjectCard } from "./ProjectCard";
 
 export function ProjectsList({ projects }: { projects: Project[] }) {

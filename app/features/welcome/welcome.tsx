@@ -1,7 +1,7 @@
-import { ThreeDMe } from "~/components/3DMe";
-import { Page } from "~/components/Page";
-import { useGetRandomBoolean } from "~/hooks/useGetRandomBoolean";
-import { useIsDesktop } from "~/hooks/useIsDesktop";
+import { ThreeDMe } from "@/components/3DMe";
+import { Page } from "@/components/Page";
+import { useGetRandomBoolean } from "@/hooks/useGetRandomBoolean";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function Welcome() {
     const title = "Álvaro López Álvarez"
