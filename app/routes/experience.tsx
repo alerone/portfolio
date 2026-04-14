@@ -1,4 +1,4 @@
-import type { Route } from "./+types/projects";
+import type { Route } from "./+types/experience";
 import { ExperiencePage } from "@/features/experience/ExperiencePage";
 
 export function meta({ }: Route.MetaArgs) {
@@ -9,6 +9,5 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export default function Experiences() {
-    return <ExperiencePage />
+    return <ExperiencePage />;
 }
-

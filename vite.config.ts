@@ -7,7 +7,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 const BASE = process.env.REACT_ROUTER_ENV === "prod" ? "/portfolio/" : "/";
 export default defineConfig({
     plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
-    base: '/portfolio/', // Importante: nombre de tu repositorio
+    base: BASE,
     build: {
         outDir: 'dist',
         assetsDir: 'assets',

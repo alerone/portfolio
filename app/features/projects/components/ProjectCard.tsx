@@ -1,10 +1,12 @@
-import { getTechnologyBySlug } from "@/content/technologies"
-import type { Project, ProjectStatus } from "@/content/content-types"
-import { TechnologyBadge } from "@/components/TechnologyBadge"
-import { getLogo } from "@/resources/logos"
-import { IconA } from "@/components/IconA"
-
-import { ExternalLink } from "lucide-react"
+import { Link } from "react-router";
+import { getTechnologyBySlug } from "@/content/technologies";
+import type { Project, ProjectStatus } from "@/content/content-types";
+import { TechnologyBadge } from "@/components/TechnologyBadge";
+import { getLogo } from "@/resources/logos";
+import { IconA } from "@/components/IconA";
+import { ExternalLink, Star } from "lucide-react";
+import { assetURL } from "@/utils/assets";
+import { FeaturedStar } from "@/components/FeaturedStar";
 
 type ProjectCardProps = {
     project: Project;
@@ -27,11 +29,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
     return (
         <article className="bg-primary-700 rounded-lg p-4 flex flex-col gap-4 w-full">
-            <div className="flex items-center justify-between mb-4">
-                <div className="gap-4 flex items-center">
+            <div className="flex items-center justify-between mb-4 gap-4">
+                <Link
+                    to={`/projects/${project.slug}`}
+                    className="gap-4 flex items-center min-w-0 hover:opacity-90 transition-opacity"
+                >
                     {project.image && (
                         <img
-                            src={project.image}
+                            src={assetURL(project.image)}
                             alt={project.name}
                             height={60}
                             width={60}
@@ -39,10 +44,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
                             className="rounded-md shadow-md"
                         />
                     )}
-                    <h2 className="text-lg font-semibold text-white">{project.name}</h2>
-                </div>
 
-                <div className="flex flex-row gap-3 items-center">
+                    <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                            <h2 className="text-lg font-semibold text-white truncate">{project.name}</h2>
+                            {project.featured && <FeaturedStar />}
+                        </div>
+                        <p className="text-sm opacity-70">View details</p>
+                    </div>
+                </Link>
+
+                <div
+                    className="flex flex-row gap-3 items-center shrink-0"
+                    onClick={(e) => e.stopPropagation()}
+                >
                     {project.githubUrl && <IconA href={project.githubUrl} icon={github} />}
                     {project.liveUrl && (
                         <IconA

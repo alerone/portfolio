@@ -44,7 +44,7 @@ export const technologies: Technology[] = [
     {
         slug: "nats",
         name: "Nats",
-        url: "https://react.dev",
+        url: "https://nats.io",
         description: "NATS is a lightweight, high-performance messaging system designed for distributed systems and microservices. It supports publish/subscribe, request/reply, and work queues, making it ideal for low-latency, scalable applications.",
         icon: "nats",
         level: 3,
@@ -196,7 +196,7 @@ export const technologies: Technology[] = [
         keywords: ["embeddings", "Semantic similarity", "NLP models"]
     },
     {
-        slug: "lang-chain",
+        slug: "langchain",
         name: "LangChain",
         icon: "langchain",
         url: "https://www.langchain.com/",
@@ -206,7 +206,7 @@ export const technologies: Technology[] = [
         keywords: ["prompt chaining", "semantic chunking"]
     },
     {
-        slug: "open-ai-api",
+        slug: "openaiapi",
         name: "OpenAI API",
         icon: "openai",
         url: "https://openai.com/api/",
