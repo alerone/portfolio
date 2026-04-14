@@ -5,16 +5,17 @@ import { ThreeDMe } from "../3DMe";
 import { Menu, X } from "lucide-react";
 
 export function Drawer() {
-    const [isOpen, setIsOpen] = useState(false)
-    const MenuIcon = <Menu />
-    const CloseIcon = <X />
+    const [isOpen, setIsOpen] = useState(false);
+    const MenuIcon = Menu;
+    const CloseIcon = X;
 
     return (
         <div className="relative">
             <IconButton
-                onClick={() => setIsOpen(prev => !prev)}
+                onClick={() => setIsOpen((prev) => !prev)}
                 className="bg-primary-700"
-                icon={isOpen ? CloseIcon : MenuIcon} />
+                icon={isOpen ? CloseIcon : MenuIcon}
+            />
             {isOpen && (
                 <div
                     onClick={() => setIsOpen(false)}
@@ -36,8 +37,5 @@ export function Drawer() {
                 </div>
             </div>
         </div>
-
-    )
+    );
 }
-
-

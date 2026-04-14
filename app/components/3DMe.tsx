@@ -1,3 +1,4 @@
+import { assetURL } from "@/utils/assets";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
@@ -25,7 +26,7 @@ type AlvaroProps = {
 function AlvaroModel({ action = "hi", jump = false, lookAt = "front" }: AlvaroProps) {
     const speed = 0.02;
     const group = useRef<THREE.Group>(null!);
-    const url = "/portfolio/models/alvaro.glb";
+    const url = assetURL("models/alvaro.glb");
     const { scene, animations } = useGLTF(url);
     const { actions } = useAnimations(animations, group);
 

@@ -1,3 +1,4 @@
+import { assetURL } from "@/utils/assets";
 import type { ReactElement } from "react";
 
 export type IconResource = {
@@ -61,7 +62,7 @@ const logos = {
     apisix: {
         href: "https://apisix.apache.org/",
         icon: (
-            <img width={50} height={50} src="images/apisix.png" />
+            <img width={50} height={50} src={assetURL("images/apisix.png")} />
         )
     },
     git: {
@@ -136,7 +137,7 @@ const logos = {
     flask: {
         href: "https://flask.palletsprojects.com/en/stable/",
         icon: (
-            <img width={50} height={50} src="images/flask.png" />
+            <img width={50} height={50} src={assetURL("images/flask.png")} />
         )
     },
     github: {
