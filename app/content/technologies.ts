@@ -81,6 +81,26 @@ export const technologies: Technology[] = [
         keywords: ["Dependency injection", "Kotlin", "Android"]
     },
     {
+        slug: "javascript",
+        name: "JavaScript",
+        url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+        description: "High-level programming language of the web used to build interactive frontend experiences and server-side applications. It is dynamic, prototype-based, and runs in browsers as well as environments like Node.js.",
+        icon: "javascript",
+        level: 4,
+        visible: true,
+        keywords: ["ES6+", "DOM", "async/await", "nodejs"]
+    },
+    {
+        slug: "typescript",
+        name: "TypeScript",
+        url: "https://www.typescriptlang.org/",
+        description: "A superset of JavaScript that adds static typing, better tooling, and safer refactoring. It helps build scalable applications by catching errors earlier during development.",
+        icon: "typescript",
+        level: 4,
+        visible: true,
+        keywords: ["static typing", "interfaces", "generics", "type safety"]
+    },
+    {
         slug: "kotlin",
         name: "Kotlin",
         description: "Modern, concise and type-safe programming language that runs on the JVM, is fully interoperable with Java, and it's designed for safety, productivity, and multiplatform development (Android, backend, web, native).",
@@ -196,12 +216,62 @@ export const technologies: Technology[] = [
         keywords: ["embeddings", "Semantic similarity", "NLP models"]
     },
     {
+        slug: "gemini-api",
+        name: "Gemini API",
+        url: "https://ai.google.dev/",
+        description: "API for accessing Google's Gemini models for text generation, multimodal understanding, and LLM-powered features such as chat, structured output, and content processing.",
+        icon: "gemini",
+        level: 2,
+        visible: true,
+        keywords: ["llm", "multimodal", "ai api", "text generation"]
+    },
+    {
+        slug: "render",
+        name: "Render",
+        url: "https://render.com/",
+        description: "Cloud platform for deploying web applications, APIs, static sites, databases, and background workers. It simplifies hosting, scaling, and infrastructure management for modern projects.",
+        icon: "render",
+        level: 2,
+        visible: true,
+        keywords: ["deployment", "hosting", "web services", "infrastructure"]
+    },
+    {
+        slug: "vercel",
+        name: "Vercel",
+        url: "https://vercel.com/",
+        description: "Cloud platform focused on frontend deployment and full-stack web applications. It is especially popular for shipping fast static sites, serverless functions, and Next.js projects.",
+        icon: "vercel",
+        level: 3,
+        visible: true,
+        keywords: ["deployment", "frontend hosting", "serverless", "nextjs"]
+    },
+    {
+        slug: "supabase",
+        name: "Supabase",
+        url: "https://supabase.com/",
+        description: "Open-source backend platform that provides a PostgreSQL database, authentication, storage, realtime features, and APIs. It is a popular choice for building full-stack applications quickly.",
+        icon: "supabase",
+        level: 1,
+        visible: true,
+        keywords: ["backend as a service", "authentication", "database", "realtime"]
+    },
+    {
+        slug: "postgresql",
+        name: "PostgreSQL",
+        url: "https://www.postgresql.org/",
+        description: "Open-source relational database management system known for reliability, performance, and strong SQL support. It is widely used in production applications that require structured data and advanced querying.",
+        icon: "postgresql",
+        level: 3,
+        visible: true,
+        keywords: ["sql", "relational database", "queries", "data modeling"]
+    },
+    {
         slug: "langchain",
         name: "LangChain",
         icon: "langchain",
         url: "https://www.langchain.com/",
         description: "A framework that helps build LLM-powered applications, connecting language models with data sources, tools, and memory.",
-        level: 0,
+        level: 2,
         visible: true,
         keywords: ["prompt chaining", "semantic chunking"]
     },
