@@ -1,5 +1,9 @@
 import { Link } from "react-router";
-import type { Project } from "@/content/content-types";
+import type {
+    Project,
+    ProjectCategory,
+    ProjectRole,
+} from "@/content/content-types";
 import { Page } from "@/components/Page";
 import { TechnologyBadge } from "@/components/TechnologyBadge";
 import { getTechnologyBySlug } from "@/content/technologies";
@@ -7,7 +11,6 @@ import { getRelatedProjects } from "@/content/projects";
 import { assetURL } from "@/utils/assets";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { FeaturedStar } from "@/components/FeaturedStar";
-import ReactMarkdown from "react-markdown";
 import { getLogo } from "@/resources/logos";
 import { IconA } from "@/components/IconA";
 import { ProjectScreenshotsCarousel } from "./components/ProjectScreenshotsCarrousel";
@@ -29,9 +32,39 @@ const statusClasses = {
     planned: "from-indigo-600 to-indigo-400",
 } as const;
 
+const categoryLabel: Record<ProjectCategory, string> = {
+    backend: "Backend",
+    fullstack: "Full-stack",
+    mobile: "Mobile",
+    systems: "Systems",
+    frontend: "Frontend",
+    ai: "AI",
+    cli: "CLI",
+    game: "Game",
+};
+
+const roleLabel: Record<ProjectRole, string> = {
+    personal: "Personal",
+    academic: "Academic",
+    tfg: "TFG",
+    tfm: "TFM",
+    course: "Course",
+    internship: "Internship",
+    team: "Team",
+};
+
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
     const relatedProjects = getRelatedProjects(project, 3);
     const github = getLogo("github").icon;
+
+    const languageItems = (project.languages ?? [])
+        .map((slug) => getTechnologyBySlug(slug))
+        .filter(Boolean);
+
+    const technologyItems = project.technologies
+        .filter((slug) => !(project.languages ?? []).includes(slug))
+        .map((slug) => getTechnologyBySlug(slug))
+        .filter(Boolean);
 
     return (
         <Page
@@ -64,6 +97,18 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                                         {statusLabel[project.status]}
                                     </span>
 
+                                    {project.category && (
+                                        <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/68">
+                                            {categoryLabel[project.category]}
+                                        </span>
+                                    )}
+
+                                    {project.role && (
+                                        <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/68">
+                                            {roleLabel[project.role]}
+                                        </span>
+                                    )}
+
                                     {project.featured && (
                                         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/75">
                                             <FeaturedStar />
@@ -93,9 +138,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                         </div>
 
                         <div className="flex flex-wrap items-center gap-3 border-t border-white/10 pt-5">
-                            {project.githubUrl && (
-                                <IconA href={project.githubUrl} icon={github} />
-                            )}
+                            {project.githubUrl && <IconA href={project.githubUrl} icon={github} />}
 
                             {project.liveUrl && (
                                 <a
@@ -110,19 +153,39 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                             )}
                         </div>
 
-                        {project.technologies.length > 0 && (
-                            <div className="flex flex-wrap gap-2">
-                                {project.technologies.map((techSlug) => {
-                                    const technology = getTechnologyBySlug(techSlug);
-                                    if (!technology) return null;
+                        {languageItems.length > 0 && (
+                            <div className="flex flex-col gap-2 border-t border-white/10 pt-5">
+                                <p className="text-[11px] uppercase tracking-[0.16em] text-white/42">
+                                    Languages
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                    {languageItems.map((language) =>
+                                        language ? (
+                                            <TechnologyBadge
+                                                key={language.slug}
+                                                technology={language}
+                                            />
+                                        ) : null
+                                    )}
+                                </div>
+                            </div>
+                        )}
 
-                                    return (
-                                        <TechnologyBadge
-                                            key={techSlug}
-                                            technology={technology}
-                                        />
-                                    );
-                                })}
+                        {technologyItems.length > 0 && (
+                            <div className="flex flex-col gap-2">
+                                <p className="text-[11px] uppercase tracking-[0.16em] text-white/42">
+                                    Stack
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                    {technologyItems.map((technology) =>
+                                        technology ? (
+                                            <TechnologyBadge
+                                                key={technology.slug}
+                                                technology={technology}
+                                            />
+                                        ) : null
+                                    )}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -192,5 +255,3 @@ function ProjectDescription({ description }: { description: string }) {
         </div>
     );
 }
-
-

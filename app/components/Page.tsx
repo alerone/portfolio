@@ -16,7 +16,7 @@ export function Page({
     description,
 }: PageProps) {
     return (
-        <section className="flex flex-col items-center gap-8 pt-6 xl:pt-10">
+        <section className="flex flex-col items-center gap-8 pt-6 xl:pt-10 pb-10">
             <header className="w-full max-w-3xl text-center">
                 {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
 

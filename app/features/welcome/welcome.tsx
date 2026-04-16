@@ -8,7 +8,7 @@ export function Welcome() {
     const isDesktop = useIsDesktop();
 
     return (
-        <section className="flex flex-col items-center pt-6 xl:pt-10">
+        <section className="flex flex-col items-center pt-6 xl:pt-10 pb-10">
             <div className="w-full max-w-4xl">
                 <div className="surface rounded-[28px] px-6 py-7 xl:px-8 xl:py-8">
                     <div className="flex items-center gap-6 xl:grid-cols-[minmax(0,1fr)_190px]">
