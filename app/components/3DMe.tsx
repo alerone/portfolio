@@ -4,9 +4,16 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-export function ThreeDMe({ action, jump, lookAt }: AlvaroProps) {
+type AlvaroProps = {
+    action?: "hi" | "lookAt";
+    jump?: boolean;
+    lookAt?: ModelLookAt;
+    size?: number
+};
+
+export function ThreeDMe({ size = 210, action, jump, lookAt }: AlvaroProps) {
     return (
-        <Canvas style={{ width: "210px", height: "210px" }} camera={{ position: [0, 2, 3] }}>
+        <Canvas style={{ width: `${size}px`, height: `${size}px` }} camera={{ position: [0, 2, 3] }}>
             <AlvaroModel action={action} jump={jump} lookAt={lookAt} />
             <ambientLight intensity={0.2} />
             <directionalLight position={[0, 0, 5]} color={"white"} />
@@ -17,11 +24,6 @@ export function ThreeDMe({ action, jump, lookAt }: AlvaroProps) {
 
 type ModelLookAt = "front" | "left" | "right" | "back";
 
-type AlvaroProps = {
-    action?: "hi" | "lookAt";
-    jump?: boolean;
-    lookAt?: ModelLookAt;
-};
 
 function AlvaroModel({ action = "hi", jump = false, lookAt = "front" }: AlvaroProps) {
     const speed = 0.15;
