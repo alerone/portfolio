@@ -13,29 +13,51 @@ export function Drawer() {
         <div className="relative">
             <IconButton
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="bg-primary-700"
+                className="border border-white/10 bg-white/[0.08]"
                 icon={isOpen ? CloseIcon : MenuIcon}
             />
+
             {isOpen && (
-                <div
+                <button
+                    type="button"
+                    aria-label="Close menu overlay"
                     onClick={() => setIsOpen(false)}
-                    className="fixed inset-0 bg-transparent z-40"
+                    className="fixed inset-0 z-40 bg-black/65"
                 />
             )}
-            <div
-                className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-r from-primary-800 to-primary-700  shadow-lg z-50 transform transition-transform ease-out duration-300
-                        ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+
+            <aside
+                className={[
+                    "fixed left-0 top-0 z-50 h-full w-72 border-r border-white/10",
+                    "bg-[#111218] shadow-[0_0_40px_rgba(0,0,0,0.45)]",
+                    "transform transition-transform duration-300 ease-out",
+                    isOpen ? "translate-x-0" : "-translate-x-full",
+                ].join(" ")}
             >
-                <nav className="p-4 flex flex-col space-y-4">
-                    <NavButton isEnd to="/" label="Home" />
-                    <NavButton to="/technologies" label="Technologies" />
-                    <NavButton to="/projects" label="Projects" />
-                    <NavButton to="/experience" label="Experience" />
-                </nav>
-                <div className="h-full flex flex-1 z-50 ">
-                    <ThreeDMe />
+                <div className="flex h-full flex-col">
+                    <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
+                        <span className="text-sm font-semibold text-white/85">Navigation</span>
+                        <IconButton
+                            onClick={() => setIsOpen(false)}
+                            className="border border-white/10 bg-white/[0.06]"
+                            icon={CloseIcon}
+                        />
+                    </div>
+
+                    <nav className="flex flex-col gap-3 p-4">
+                        <NavButton isEnd to="/" label="Home" />
+                        <NavButton to="/technologies" label="Technologies" />
+                        <NavButton to="/projects" label="Projects" />
+                        <NavButton to="/experience" label="Experience" />
+                    </nav>
+
+                    <div className="mt-auto border-t border-white/10 p-4">
+                        <div className="flex justify-center rounded-2xl bg-white/[0.03] py-4">
+                            <ThreeDMe />
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </aside>
         </div>
     );
 }

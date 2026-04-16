@@ -32,18 +32,25 @@ export function ProjectFilters({
     onClear,
 }: ProjectFiltersProps) {
     return (
-        <section className="w-full xl:max-w-lg 2xl:max-w-xl px-2 mb-6">
-            <div className="bg-primary-800 rounded-lg p-4 flex flex-col gap-4">
-                <div className="flex flex-col md:flex-row gap-4">
-                    <div className="flex flex-col gap-1 flex-1">
-                        <label htmlFor="status-filter" className="text-sm font-semibold text-white">
+        <section className="surface rounded-[28px] p-5 xl:p-6">
+            <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-1">
+                    <p className="eyebrow">Browse</p>
+                    <p className="text-sm text-white/60">
+                        {resultCount} result{resultCount === 1 ? "" : "s"}
+                    </p>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_auto_auto] xl:items-end">
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="status-filter" className="text-sm font-medium text-white/75">
                             Status
                         </label>
                         <select
                             id="status-filter"
                             value={status}
                             onChange={(e) => onStatusChange(e.target.value)}
-                            className="rounded-lg px-3 py-2 bg-primary-700 text-white border border-primary-600"
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         >
                             <option value="">All statuses</option>
                             {statuses.map((currentStatus) => (
@@ -54,15 +61,15 @@ export function ProjectFilters({
                         </select>
                     </div>
 
-                    <div className="flex flex-col gap-1 flex-1">
-                        <label htmlFor="technology-filter" className="text-sm font-semibold text-white">
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="technology-filter" className="text-sm font-medium text-white/75">
                             Technology
                         </label>
                         <select
                             id="technology-filter"
                             value={technology}
                             onChange={(e) => onTechnologyChange(e.target.value)}
-                            className="rounded-lg px-3 py-2 bg-primary-700 text-white border border-primary-600"
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         >
                             <option value="">All technologies</option>
                             {technologies.map((tech) => (
@@ -72,10 +79,8 @@ export function ProjectFilters({
                             ))}
                         </select>
                     </div>
-                </div>
 
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                    <label className="inline-flex items-center gap-2 text-white">
+                    <label className="inline-flex h-[50px] items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-sm text-white/80">
                         <input
                             type="checkbox"
                             checked={featuredOnly}
@@ -85,19 +90,13 @@ export function ProjectFilters({
                         Featured only
                     </label>
 
-                    <div className="flex items-center gap-3">
-                        <span className="text-sm text-white opacity-80">
-                            {resultCount} result{resultCount === 1 ? "" : "s"}
-                        </span>
-
-                        <button
-                            type="button"
-                            onClick={onClear}
-                            className="px-3 py-2 rounded-lg bg-primary-600 hover:bg-primary-500 transition-colors text-white text-sm font-medium"
-                        >
-                            Clear filters
-                        </button>
-                    </div>
+                    <button
+                        type="button"
+                        onClick={onClear}
+                        className="h-[50px] rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-white/80 transition hover:bg-white/[0.08]"
+                    >
+                        Clear
+                    </button>
                 </div>
             </div>
         </section>

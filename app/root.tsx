@@ -49,11 +49,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-    const isVisible = useScrollVisibility(0.95);
+    const isVisible = useScrollVisibility(0.92);
+
     return (
-        <div className="min-h-[105vh] flex flex-col">
+        <div className="min-h-screen flex flex-col">
             <SiteHeader />
-            <main className="container mx-auto p-4 flex-1 pb-24">
+            <main className="container mx-auto w-full px-4 md:px-6 xl:px-8 pt-6 pb-24 flex-1">
                 <Outlet />
             </main>
             <SiteFooter isVisible={isVisible} />

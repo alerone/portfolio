@@ -6,7 +6,7 @@ export const technologies: Technology[] = [
         name: "React",
         url: "https://react.dev",
         description: "Frontend framework for building user interfaces. It's main idea is to split UI into reusable components, which update efficiently when data changes thanks to the Virtual DOM",
-        icon: "react",
+        icon: "upv",
         level: 3,
         keywords: ["react-router", "three-fiber", "custom hooks", "react-query"],
         visible: true,

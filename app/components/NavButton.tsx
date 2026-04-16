@@ -1,21 +1,26 @@
-import { NavLink } from "react-router"
+import { NavLink } from "react-router";
 
 type NavButtonProps = {
-    to: string,
-    label: string,
-    isEnd?: boolean
-}
+    to: string;
+    label: string;
+    isEnd?: boolean;
+};
+
 export function NavButton({ to, label, isEnd }: NavButtonProps) {
-    const linkBase = `px-2 py-1 rounded-lg bg-primary-300 text-sm font-medium transition-all hover:scale-95   duration-300`
     return (
         <NavLink
             to={to}
             end={isEnd}
             className={({ isActive }) =>
-                `${linkBase} ${isActive ? "opacity-100" : "opacity-70 hover:cursor-pointer hover:opacity-100"}`
+                [
+                    "rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 text-center",
+                    isActive
+                        ? "bg-white text-neutral-950 shadow-sm"
+                        : "text-white/72 hover:bg-white/[0.08] hover:text-white",
+                ].join(" ")
             }
         >
             {label}
         </NavLink>
-    )
+    );
 }

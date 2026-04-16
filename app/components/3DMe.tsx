@@ -6,7 +6,7 @@ import * as THREE from "three";
 
 export function ThreeDMe({ action, jump, lookAt }: AlvaroProps) {
     return (
-        <Canvas style={{ width: "300px", height: "300px" }} camera={{ position: [0, 2, 3] }}>
+        <Canvas style={{ width: "210px", height: "210px" }} camera={{ position: [0, 2, 3] }}>
             <AlvaroModel action={action} jump={jump} lookAt={lookAt} />
             <ambientLight intensity={0.2} />
             <directionalLight position={[0, 0, 5]} color={"white"} />
@@ -24,14 +24,14 @@ type AlvaroProps = {
 };
 
 function AlvaroModel({ action = "hi", jump = false, lookAt = "front" }: AlvaroProps) {
-    const speed = 0.02;
+    const speed = 0.15;
     const group = useRef<THREE.Group>(null!);
     const url = assetURL("models/alvaro.glb");
     const { scene, animations } = useGLTF(url);
     const { actions } = useAnimations(animations, group);
 
     const rotation = getLookAtRotation(lookAt);
-    const position = jump ? [0, 5, 0] : [0, 0, 0];
+    const position = [0, 5, 0];
 
     useEffect(() => {
         if (!group.current) return;
@@ -39,7 +39,7 @@ function AlvaroModel({ action = "hi", jump = false, lookAt = "front" }: AlvaroPr
     }, [lookAt]);
 
     useFrame(() => {
-        if (!group.current || !jump) return;
+        if (!group.current) return;
         if (group.current?.position.y > 0) {
             group.current.position.y -= speed;
             if (group.current?.position.y < 0) group.current.position.y = 0;

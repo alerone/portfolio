@@ -3,37 +3,37 @@ import { Icon } from "./Icon";
 import { getLogo } from "@/resources/logos";
 
 type TechBadgeProps = {
-    technology: Pick<Technology, "slug" | "name" | "url" | "icon">
-}
+    technology: Pick<Technology, "slug" | "name" | "url" | "icon">;
+};
 
 export function TechnologyBadge({ technology }: TechBadgeProps) {
     const content = technology.icon ? (
         <Icon
             iconFirst
-            width={20}
-            height={20}
+            width={16}
+            height={16}
             icon={getLogo(technology.icon)}
-            label={technology.name} />
+            label={technology.name}
+        />
     ) : (
-        <span>
-            {technology.name}
-        </span>
-    )
+        <span>{technology.name}</span>
+    );
+
+    const className =
+        "inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/75 transition hover:bg-white/[0.07]";
 
     if (!technology.url) {
-        return <span className="inline-flex hover:scale-95 transition-all duration-200 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 items-center opacity-90 px-2 py-1 rounded-lg shadow-sm">
-            {content}
-        </span>
+        return <span className={className}>{content}</span>;
     }
 
     return (
-        <a className="inline-flex hover:scale-95 transition-all duration-200 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 
-            max-w-auto items-center opacity-90 px-2 py-1 rounded-lg shadow-sm"
+        <a
+            className={className}
             href={technology.url}
             target="_blank"
             rel="noreferrer"
         >
             {content}
         </a>
-    )
+    );
 }

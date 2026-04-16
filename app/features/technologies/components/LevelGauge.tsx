@@ -8,18 +8,21 @@ const levels = {
     3: { color: "from-sky-600 to-sky-500", width: "w-4/5", label: "Advanced" },
     4: { color: "from-emerald-600 to-emerald-500", width: "w-full", label: "Expert" },
 };
+
 export function LevelGauge({ level }: { level: SkillLevel }) {
     const currentLevel = levels[level];
     const isMounted = useIsMounted();
+
     return (
-        <div className="w-xs xl:w-sm flex flex-row gap-2 opacity-90">
-            <div
-                className={`bg-gradient-to-r ${currentLevel.color} ${currentLevel.width} 
-                        rounded-lg h-full transition-all transform origin-left ease-out duration-1000 px-2
-                        ${isMounted ? "scale-x-100" : "scale-x-0"}`}
-            >
-                <h2 className="text-white font-semibold text-xs">{currentLevel.label}</h2>
+        <div className="w-[140px] xl:w-[160px]">
+            <div className="h-2 overflow-hidden rounded-full bg-white/8">
+                <div
+                    className={`h-full rounded-full bg-gradient-to-r ${currentLevel.color} ${currentLevel.width} transition-all duration-700 ease-out ${isMounted ? "scale-x-100" : "scale-x-0"} origin-left`}
+                />
             </div>
+            <p className="mt-2 text-right text-[11px] uppercase tracking-[0.14em] text-white/45">
+                {currentLevel.label}
+            </p>
         </div>
     );
 }

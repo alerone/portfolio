@@ -248,8 +248,29 @@ export const projects: Project[] = [
         name: "CourseAI",
         liveUrl: "https://course-ai-pearl.vercel.app",
         summary: "CourseAI is an innovative web platform designed to revolutionize educational content creation by leveraging generative artificial intelligence",
+        screenshots: [
+            {
+                src: "screenshots/course-ai-1.png",
+                alt: "Homepage"
+            },
+            {
+                src: "screenshots/course-ai-2.png",
+                alt: "Create course"
+            },
+            {
+                src: "screenshots/course-ai-3.png",
+                alt: "Course index"
+            },
+            {
+                src: "screenshots/course-ai-4.png",
+                alt: "Course content"
+            },
+        ],
         description: descriptions["course-ai"],
-        technologies: ["go", "typescript", "react", "gemini-api", "render", "vercel", "supabase", "postgresql"],
+        languages: ["go", "typescript"],
+        role: "personal",
+        category: "fullstack",
+        technologies: ["react", "gemini-api", "render", "vercel", "supabase", "postgresql"],
         status: "in_progress",
         featured: true
     },
@@ -260,8 +281,25 @@ export const projects: Project[] = [
         summary:
             "For my thesis, I designed and developed a mobile application to enhance the public transport experience in Valencia.",
         description: descriptions["valen-move"],
+        screenshots: [
+            {
+                src: "screenshots/valenmove-1.jpeg",
+                alt: "Homepage"
+            },
+            {
+                src: "screenshots/valenmove-2.png",
+                alt: "Favourites"
+            },
+            {
+                src: "screenshots/valenmove-3.jpeg",
+                alt: "Stop info"
+            },
+        ],
         image: "images/valenMove.jpg",
-        technologies: ["kotlin", "open-data-valencia", "hilt", "android"],
+        category: "mobile",
+        languages: ["kotlin"],
+        role: "tfg",
+        technologies: ["open-data-valencia", "hilt", "android"],
         featured: true,
         status: "completed",
     },
@@ -271,8 +309,11 @@ export const projects: Project[] = [
         githubUrl: "https://github.com/alerone/pokedex-go",
         summary: "A simple and interactive Terminal-based Pokedex written in Go.",
         description: descriptions["pokedex-go"],
+        role: "course",
+        category: "cli",
         image: "images/pokedex-go.jpg",
-        technologies: ["poke-api", "go"],
+        languages: ["go"],
+        technologies: ["poke-api"],
         status: "completed",
     },
     {
@@ -283,7 +324,10 @@ export const projects: Project[] = [
             "FaaS platform made with Golang. It's purpose is to execute functions serverless as Docker containers in a scalable way.",
         description: descriptions["faas-go"],
         image: "images/faas-go.jpg",
-        technologies: ["go", "apisix", "nats", "docker"],
+        role: "academic",
+        category: "backend",
+        languages: ["go"],
+        technologies: ["apisix", "nats", "docker"],
         status: "completed",
     },
     {
@@ -294,7 +338,10 @@ export const projects: Project[] = [
             "This is a project from a course in Boot.dev for learning about HTTP. It's a small implementation of the HyperText Transfer Protocol/1.1.",
         description: descriptions["http-from-tcp"],
         image: "images/httpfromtcp.jpg",
-        technologies: ["go"],
+        languages: ["go"],
+        category: "backend",
+        role: "course",
+        technologies: ["http", "tcp"],
         status: "completed",
     },
     {
@@ -305,8 +352,25 @@ export const projects: Project[] = [
         liveUrl: "https://alerone.github.io/rocketsweeper",
         summary:
             "This is a Master's project Game based on Minesweeper but in Space with 3D graphics.",
+        screenshots: [
+            {
+                src: "screenshots/rocketsweeper-1.png",
+                alt: "Main menu"
+            },
+            {
+                src: "screenshots/rocketsweeper-2.png",
+                alt: "Mid game"
+            },
+            {
+                src: "screenshots/rocketsweeper-3.png",
+                alt: "Game over"
+            },
+        ],
         description: descriptions["rocketsweeper"],
-        technologies: ["threejs", "javascript"],
+        role: "academic",
+        category: "game",
+        languages: ["javascript"],
+        technologies: ["threejs"],
         featured: true,
         status: "completed",
     },
@@ -317,7 +381,10 @@ export const projects: Project[] = [
         summary:
             "This project is an implementation of a task application with OAuth 2.0 as the authentication method.",
         description: descriptions["oauth-rse"],
-        technologies: ["python", "oauth", "flask"],
+        role: "academic",
+        category: "backend",
+        languages: ["python"],
+        technologies: ["oauth", "flask"],
         status: "completed",
     },
     {
@@ -328,7 +395,10 @@ export const projects: Project[] = [
         summary:
             "This project is a web application to manage the cleaning tasks of me and my roommates.",
         description: descriptions["limpieza"],
-        technologies: ["typescript", "react", "firebase", "oauth", "github", "tailwind", "typescript"],
+        role: "personal",
+        category: "fullstack",
+        languages: ["typescript"],
+        technologies: ["react", "firebase", "oauth", "github", "tailwind", "typescript"],
         status: "planned",
     },
     {
@@ -338,6 +408,9 @@ export const projects: Project[] = [
         summary:
             "This is a interpreter made in Go of an invented language based on the book 'Writing an Interpreter in Go' by Thorsten Bell",
         description: descriptions["go-interpreter"],
+        role: "course",
+        category: "systems",
+        languages: ["go"],
         technologies: ["go"],
         status: "completed",
     },
@@ -349,7 +422,10 @@ export const projects: Project[] = [
         summary:
             "This repository contains the complete code and lessons from a hands-on RAG (Retrieval-Augmented Generation) course, developed step by step with the assistance of ChatGPT.",
         description: descriptions["rag-course"],
-        technologies: ["python", "faiss", "sentence-transformers", "langchain", "openaiapi"],
+        role: "course",
+        category: "ai",
+        languages: ["python"],
+        technologies: ["faiss", "sentence-transformers", "langchain", "openaiapi"],
         status: "completed",
     },
 ];

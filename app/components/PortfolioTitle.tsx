@@ -5,9 +5,14 @@ export function PortfolioTitle() {
         <NavLink
             to="/"
             end
-            className={"font-semibold"}
+            className="flex flex-col leading-none"
         >
-            Álvaro - Portfolio
+            <span className="text-base font-semibold tracking-tight text-white">
+                Álvaro López
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.18em] text-white/45">
+                Software Portfolio
+            </span>
         </NavLink>
-    )
+    );
 }

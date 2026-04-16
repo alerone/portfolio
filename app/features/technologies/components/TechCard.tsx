@@ -6,26 +6,41 @@ import { LevelGauge } from "./LevelGauge";
 export function TechCard({ technology }: { technology: Technology }) {
     const cardContent = (
         <>
-            <div className="flex items-center gap-3 justify-between">
-                <div className="flex flex-row gap-3 items-center">
-                    {technology.icon && (
-                        <Icon
-                            icon={getLogo(technology.icon as never)}
-                            height={24}
-                            width={24}
-                        />
-                    )}
-                    <h2 className="text-white whitespace-nowrap font-semibold text-lg">
-                        {technology.name}
-                    </h2>
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex min-w-0 items-center gap-3">
+                        {technology.icon && (
+                            <div className="shrink-0 rounded-xl bg-white/[0.08] p-2">
+                                <Icon
+                                    icon={getLogo(technology.icon as never)}
+                                    height={20}
+                                    width={20}
+                                />
+                            </div>
+                        )}
+
+                        <div className="min-w-0">
+                            <h2 className="text-base xl:text-lg font-semibold text-white">
+                                {technology.name}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div className="shrink-0">
+                        <LevelGauge level={technology.level} />
+                    </div>
                 </div>
 
+                <p className="text-sm text-white/72">
+                    {technology.description}
+                </p>
+
                 {technology.keywords && technology.keywords.length > 0 && (
-                    <div className="gap-2 flex flex-row overflow-x-auto whitespace-nowrap max-w-full max-h-[40px]">
+                    <div className="flex flex-wrap gap-2">
                         {technology.keywords.map((keyword) => (
                             <span
                                 key={keyword}
-                                className="opacity-85 bg-primary-600 py-1 px-2 rounded-lg text-sm text-slate-100"
+                                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/65"
                             >
                                 {keyword}
                             </span>
@@ -33,23 +48,19 @@ export function TechCard({ technology }: { technology: Technology }) {
                     </div>
                 )}
             </div>
-
-            <p className="text-white text-md">{technology.description}</p>
-            <LevelGauge level={technology.level} />
         </>
     );
 
+    const className =
+        "surface mx-auto flex w-full flex-col gap-4 rounded-[24px] p-5 transition duration-200 hover:bg-white/[0.06] hover:border-white/16";
+
     if (!technology.url) {
-        return (
-            <article className="flex hover:scale-105 transition-all duration-200 flex-col gap-4 p-3 bg-primary-700 rounded-lg">
-                {cardContent}
-            </article>
-        );
+        return <article className={className}>{cardContent}</article>;
     }
 
     return (
         <a
-            className="flex hover:scale-105 transition-all duration-200 flex-col gap-4 p-3 bg-primary-700 rounded-lg"
+            className={className}
             href={technology.url}
             target="_blank"
             rel="noreferrer"

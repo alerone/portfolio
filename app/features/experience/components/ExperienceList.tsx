@@ -3,10 +3,10 @@ import { ExperienceCard } from "./ExperienceCard";
 
 export function ExperienceList({ experiences }: { experiences: ExperienceItem[] }) {
     return (
-        <div className="flex flex-col w-full px-2 xl:max-w-lg 2xl:max-w-xl gap-4">
-            {experiences.length > 0 && experiences.map((experience) => (
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
+            {experiences.map((experience) => (
                 <ExperienceCard key={experience.slug} experience={experience} />
             ))}
         </div>
-    )
+    );
 }

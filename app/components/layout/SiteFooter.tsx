@@ -1,29 +1,26 @@
 import { getLogo } from "@/resources/logos";
 import { IconHref } from "../IconHref";
 
-
 export function SiteFooter({ isVisible }: { isVisible: boolean }) {
-    const react = getLogo("react")
-    const github = getLogo("github")
+    const react = getLogo("react");
+    const github = getLogo("github");
+
     return (
         <footer
-            className={`
-            fixed bottom-0 left-0 right-0 z-50
-            bg-gradient-to-r from-primary-800 via-primary-700 to-primary-800
-            transition-transform duration-300 ease-in-out
-            ${isVisible ? "translate-y-0" : "translate-y-full"}
-        `}
+            className={[
+                "fixed bottom-0 left-0 right-0 z-40 border-t border-white/12 bg-neutral-900/95 shadow-[0_-8px_30px_rgba(0,0,0,0.35)] backdrop-blur-xl",
+                "transition-transform duration-300 ease-in-out",
+                isVisible ? "translate-y-0" : "translate-y-full",
+            ].join(" ")}
         >
-            <div className="xl:px-16 p-4 container flex flex-col opacity-70">
-                <p className="text-sm">
-                    Made with <IconHref icon={react} href={react.href} label="React" />
+            <div className="container mx-auto flex flex-col gap-2 px-4 py-4 text-sm text-white/70 md:px-6 xl:px-8">
+                <p>
+                    Built with <IconHref icon={react} href={react.href} label="React" />
                 </p>
-                <p className="text-sm">
-                    Hosted in <IconHref icon={github} href={github.href} label="Github Pages" />
+                <p>
+                    Hosted on <IconHref icon={github} href={github.href} label="GitHub Pages" />
                 </p>
-                <p className="text-sm">
-                    @{new Date().getFullYear()} Álvaro López Álvarez. All rights reserved
-                </p>
+                <p>© {new Date().getFullYear()} Álvaro López Álvarez</p>
             </div>
         </footer>
     );

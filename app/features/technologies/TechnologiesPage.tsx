@@ -3,12 +3,14 @@ import { TechList } from "./components/TechList";
 import { getVisibleTechnologies } from "@/content/technologies";
 
 export function TechnologiesPage() {
-    const title = "Technologies"
     return (
-        <>
-            <Page headerTitle={title} className="pb-10">
-                <TechList technologies={getVisibleTechnologies()} />
-            </Page>
-        </>
-    )
+        <Page
+            eyebrow="Stack"
+            headerTitle="Technologies"
+            description="Tools and technologies I’ve used across academic work, personal projects and product-focused builds."
+            className="pb-10"
+        >
+            <TechList technologies={getVisibleTechnologies()} />
+        </Page>
+    );
 }

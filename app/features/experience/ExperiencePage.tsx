@@ -1,12 +1,16 @@
-import { Page } from "@/components/Page"
-import { ExperienceList } from "./components/ExperienceList"
-import { experience } from "@/content/experience"
+import { Page } from "@/components/Page";
+import { ExperienceList } from "./components/ExperienceList";
+import { experience } from "@/content/experience";
 
 export function ExperiencePage() {
-    const title = "Experience"
     return (
-        <Page headerTitle={title} className="pb-10">
+        <Page
+            eyebrow="Trajectory"
+            headerTitle="Experience"
+            description="Professional experience and the environments where I’ve grown as a developer."
+            className="pb-10"
+        >
             <ExperienceList experiences={experience} />
         </Page>
-    )
+    );
 }

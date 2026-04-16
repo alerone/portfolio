@@ -11,8 +11,6 @@ import {
 import { getTechnologyBySlug } from "@/content/technologies";
 
 export function ProjectsPage() {
-    const title = "Projects";
-
     const [status, setStatus] = useState("");
     const [technology, setTechnology] = useState("");
     const [featuredOnly, setFeaturedOnly] = useState(false);
@@ -34,14 +32,6 @@ export function ProjectsPage() {
         });
     }, [status, technology, featuredOnly]);
 
-    const featuredProjects = useMemo(() => {
-        return filteredProjects.filter((project) => project.featured);
-    }, [filteredProjects]);
-
-    const regularProjects = useMemo(() => {
-        return filteredProjects.filter((project) => !project.featured);
-    }, [filteredProjects]);
-
     const clearFilters = () => {
         setStatus("");
         setTechnology("");
@@ -49,62 +39,49 @@ export function ProjectsPage() {
     };
 
     const hasActiveFilters = Boolean(status || technology || featuredOnly);
-    const hasDefaultFeaturedSection = !hasActiveFilters;
 
     return (
-        <Page headerTitle={title} className="pb-10 flex-col gap-6">
-            <ProjectFilters
-                status={status}
-                technology={technology}
-                featuredOnly={featuredOnly}
-                statuses={statuses}
-                technologies={filterTechnologies}
-                resultCount={filteredProjects.length}
-                onStatusChange={setStatus}
-                onTechnologyChange={setTechnology}
-                onFeaturedOnlyChange={setFeaturedOnly}
-                onClear={clearFilters}
-            />
+        <Page
+            eyebrow="Selected work"
+            headerTitle="Projects"
+            description="A mix of backend, systems, mobile and experimental work."
+            className="flex flex-col items-center gap-8 pb-10"
+        >
+            <div className="w-full max-w-3xl">
+                <ProjectFilters
+                    status={status}
+                    technology={technology}
+                    featuredOnly={featuredOnly}
+                    statuses={statuses}
+                    technologies={filterTechnologies}
+                    resultCount={filteredProjects.length}
+                    onStatusChange={setStatus}
+                    onTechnologyChange={setTechnology}
+                    onFeaturedOnlyChange={setFeaturedOnly}
+                    onClear={clearFilters}
+                />
+            </div>
 
-            {hasDefaultFeaturedSection && getFeaturedProjects().length > 0 && (
-                <section className="w-full xl:max-w-lg 2xl:max-w-xl px-2 flex flex-col gap-4">
-                    <div>
-                        <h2 className="text-xl font-bold">Featured Projects</h2>
-                        <p className="opacity-80 text-sm">
-                            A quick selection of the projects that best represent my work.
-                        </p>
+            {!hasActiveFilters && getFeaturedProjects().length > 0 && (
+                <section className="w-full flex flex-col items-center gap-4">
+                    <div className="w-full max-w-3xl text-center">
+                        <p className="eyebrow mb-2">Highlights</p>
+                        <h2 className="section-title">Featured projects</h2>
                     </div>
-                    <ProjectsList projects={getFeaturedProjects()} />
+                    <ProjectsList projects={getFeaturedProjects()} featured />
                 </section>
             )}
 
-            <section className="w-full xl:max-w-lg 2xl:max-w-xl px-2 flex flex-col gap-4">
-                <div>
-                    <h2 className="text-xl font-bold">
-                        {hasActiveFilters ? "Filtered Projects" : "All Projects"}
+            <section className="w-full flex flex-col items-center gap-4">
+                <div className="w-full max-w-3xl text-center">
+                    <p className="eyebrow mb-2">{hasActiveFilters ? "Filtered view" : "Archive"}</p>
+                    <h2 className="section-title">
+                        {hasActiveFilters ? "Matching projects" : "All projects"}
                     </h2>
-                    <p className="opacity-80 text-sm">
-                        {filteredProjects.length > 0
-                            ? "Browse projects by technology, status, or featured flag."
-                            : "No projects match the current filters."}
-                    </p>
                 </div>
 
-                {hasActiveFilters ? (
-                    <ProjectsList projects={filteredProjects} />
-                ) : (
-                    <ProjectsList projects={projects} />
-                )}
+                <ProjectsList projects={filteredProjects} />
             </section>
-
-            {hasActiveFilters && featuredProjects.length > 0 && regularProjects.length > 0 && (
-                <section className="w-full xl:max-w-lg 2xl:max-w-xl px-2 flex flex-col gap-4">
-                    <div>
-                        <h2 className="text-xl font-bold">Featured in results</h2>
-                    </div>
-                    <ProjectsList projects={featuredProjects} />
-                </section>
-            )}
         </Page>
     );
 }
