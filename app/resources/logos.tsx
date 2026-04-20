@@ -331,7 +331,20 @@ const logos = {
 };
 
 export type LogoKey = keyof typeof logos
-export function getLogo(logoKey: LogoKey) {
-    return logos[logoKey]
+
+export function getLogo(key?: string | null) {
+    if (!key) return undefined;
+    return logos[key as LogoKey];
 }
 
+export function getLogoKeys(): LogoKey[] {
+    return Object.keys(logos) as LogoKey[];
+}
+
+export function getLogoOptions() {
+    return Object.entries(logos).map(([key, value]) => ({
+        key,
+        label: key,
+        href: value.href,
+    }));
+}
