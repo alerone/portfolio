@@ -6,11 +6,17 @@ import { useAdminProject } from "@/hooks/useAdminProject";
 import { updateProject } from "@/lib/api/admin-projects";
 import { AdminGuard } from "@/components/AdminGuard";
 import { AdminLayout } from "../AdminLayout";
+import { useTechnologies } from "@/hooks/useTechnologies";
 
 export function AdminProjectEditPage() {
     const { slug } = useParams();
     const navigate = useNavigate();
     const { project, isLoading, error } = useAdminProject(slug);
+    const {
+        technologies,
+        isLoading: technologiesLoading,
+        error: technologiesError,
+    } = useTechnologies();
 
     if (!slug) {
         return <Navigate to="/admin/projects" replace />;
@@ -24,23 +30,26 @@ export function AdminProjectEditPage() {
     return (
         <AdminGuard>
             <AdminLayout title="Edit project">
-                {isLoading && (
+                {(isLoading || technologiesLoading) && (
                     <section className="surface rounded-[28px] p-5 text-white/70">
                         Loading project...
                     </section>
                 )}
 
-                {error && (
+                {(error || technologiesError) && (
                     <section className="surface rounded-[28px] p-5 text-rose-300">
-                        Error loading project: {error}
+                        Error loading data: {error ?? technologiesError}
                     </section>
                 )}
 
-                {!isLoading && !error && !project && <Navigate to="/admin/projects" replace />}
+                {!isLoading && !technologiesLoading && !error && !technologiesError && !project && (
+                    <Navigate to="/admin/projects" replace />
+                )}
 
-                {!isLoading && !error && project && (
+                {!isLoading && !technologiesLoading && !error && !technologiesError && project && (
                     <AdminProjectForm
                         initialProject={project}
+                        technologiesCatalog={technologies}
                         submitLabel="Save changes"
                         onSubmit={handleSubmit}
                     />

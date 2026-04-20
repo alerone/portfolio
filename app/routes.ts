@@ -13,4 +13,8 @@ export default [
     route("admin/projects", "routes/admin-projects.tsx"),
     route("admin/projects/new", "routes/admin-project-new.tsx"),
     route("admin/projects/:slug/edit", "routes/admin-project-edit.tsx"),
+    route("admin/technologies", "routes/admin-technologies.tsx"),
+    route("admin/technologies/new", "routes/admin-technology-new.tsx"),
+    route("admin/technologies/:slug/edit", "routes/admin-technology-edit.tsx"),
 ] satisfies RouteConfig;
+

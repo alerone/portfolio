@@ -1,22 +1,27 @@
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Project } from "@/content/content-types";
+import type { Project, Technology } from "@/content/content-types";
 import {
     projectFormSchema,
     type ProjectFormInput,
     type ProjectFormValues,
 } from "../schemas/project-form.schema";
 import { Button } from "@/components/ui/button";
+import { ProjectTechnologySelector } from "./ProjectTechnologySelector";
+import { ProjectScreenshotsEditor } from "./ProjectScreenshotsEditor";
+import { ProjectImageUploader } from "./ProjectImageUploader";
 
 type AdminProjectFormProps = {
     initialProject?: Project | null;
+    technologiesCatalog: Technology[];
     submitLabel: string;
     onSubmit: (values: ProjectFormValues) => Promise<void>;
 };
 
 export function AdminProjectForm({
     initialProject,
+    technologiesCatalog,
     submitLabel,
     onSubmit,
 }: AdminProjectFormProps) {
@@ -36,6 +41,14 @@ export function AdminProjectForm({
             role: initialProject?.role,
             featured: initialProject?.featured ?? false,
             sortOrder: 0,
+            languages: initialProject?.languages ?? [],
+            technologies: initialProject?.technologies ?? [],
+            screenshots:
+                initialProject?.screenshots?.map((screenshot, index) => ({
+                    url: screenshot.src,
+                    alt: screenshot.alt,
+                    sortOrder: index,
+                })) ?? [],
         }),
         [initialProject]
     );
@@ -44,15 +57,73 @@ export function AdminProjectForm({
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
+        watch,
+        setValue,
+        control,
     } = useForm<ProjectFormInput, unknown, ProjectFormValues>({
         resolver: zodResolver(projectFormSchema),
         defaultValues,
     });
 
+    const {
+        fields: screenshotFields,
+        append: appendScreenshot,
+        remove: removeScreenshot,
+        move: moveScreenshot,
+        update: updateScreenshot,
+    } = useFieldArray({
+        control,
+        name: "screenshots",
+    });
+
+    const selectedLanguages = watch("languages");
+    const selectedTechnologies = watch("technologies");
+    const currentSlug = watch("slug");
+    const currentImage = watch("image");
+
+    const languageOptions = useMemo(
+        () =>
+            technologiesCatalog.filter((technology) =>
+                ["go", "python", "typescript", "javascript", "kotlin"].includes(
+                    technology.slug
+                )
+            ),
+        [technologiesCatalog]
+    );
+
+    const stackOptions = useMemo(
+        () =>
+            technologiesCatalog.filter(
+                (technology) => !languageOptions.some((lang) => lang.slug === technology.slug)
+            ),
+        [technologiesCatalog, languageOptions]
+    );
+
+    function toggleInArray(field: "languages" | "technologies", slug: string) {
+        const current = watch(field);
+        const next = current!.includes(slug)
+            ? current!.filter((item) => item !== slug)
+            : [...current!, slug];
+
+        setValue(field, next, {
+            shouldDirty: true,
+            shouldValidate: true,
+        });
+    }
+
     async function submit(values: ProjectFormValues) {
         try {
             setFormError(null);
-            await onSubmit(values);
+
+            const normalizedValues: ProjectFormValues = {
+                ...values,
+                screenshots: values.screenshots.map((screenshot, index) => ({
+                    ...screenshot,
+                    sortOrder: index,
+                })),
+            };
+
+            await onSubmit(normalizedValues);
         } catch (err) {
             setFormError(err instanceof Error ? err.message : "Could not save project");
         }
@@ -174,19 +245,57 @@ export function AdminProjectForm({
                     <input type="checkbox" {...register("featured")} />
                     Featured project
                 </label>
-
-                {formError && (
-                    <div className="mt-4 rounded-2xl border border-rose-400/20 bg-rose-300/[0.08] px-4 py-3 text-sm text-rose-200">
-                        {formError}
-                    </div>
-                )}
-
-                <div className="mt-6 flex justify-end">
-                    <Button className="rounded-xl bg-indigo-600/40 hover:bg-indigo-600/60 hover:cursor-pointer hover:scale-95  duration-400 transition-all" type="submit" size="lg">
-                        {isSubmitting ? "Saving..." : submitLabel}
-                    </Button>
-                </div>
             </section>
+
+            <ProjectImageUploader
+                currentValue={currentImage}
+                projectSlug={currentSlug}
+                onUploaded={(publicUrl) => {
+                    setValue("image", publicUrl, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                    });
+                }}
+            />
+
+            <ProjectTechnologySelector
+                title="Languages"
+                description="Select the main programming languages used in the project."
+                technologies={languageOptions}
+                selectedSlugs={selectedLanguages}
+                onToggle={(slug) => toggleInArray("languages", slug)}
+            />
+
+            <ProjectTechnologySelector
+                title="Stack"
+                description="Select the main tools, frameworks and services used in the project."
+                technologies={stackOptions}
+                selectedSlugs={selectedTechnologies}
+                onToggle={(slug) => toggleInArray("technologies", slug)}
+            />
+
+            <ProjectScreenshotsEditor
+                projectSlug={currentSlug}
+                fields={screenshotFields}
+                register={register}
+                errors={errors}
+                append={appendScreenshot}
+                remove={removeScreenshot}
+                move={moveScreenshot}
+                update={updateScreenshot}
+            />
+
+            {formError && (
+                <div className="rounded-2xl border border-rose-400/20 bg-rose-300/[0.08] px-4 py-3 text-sm text-rose-200">
+                    {formError}
+                </div>
+            )}
+
+            <div className="flex justify-end">
+                <Button type="submit" size="lg">
+                    {isSubmitting ? "Saving..." : submitLabel}
+                </Button>
+            </div>
         </form>
     );
 }

@@ -46,6 +46,7 @@ export function AdminLayout({
                 <div className="mt-5 flex flex-wrap gap-2">
                     <AdminNavLink to="/admin" label="Overview" end />
                     <AdminNavLink to="/admin/projects" label="Projects" />
+                    <AdminNavLink to="/admin/technologies" label="Technologies" />
                 </div>
             </div>
 

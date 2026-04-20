@@ -27,6 +27,12 @@ export const projectRoleSchema = z.enum([
     "team",
 ]);
 
+export const projectScreenshotSchema = z.object({
+    url: z.string().trim().min(1, "Screenshot URL/path is required"),
+    alt: z.string().trim().min(1, "Alt text is required"),
+    sortOrder: z.coerce.number().int().min(0, "Must be 0 or higher"),
+});
+
 export const projectFormSchema = z.object({
     slug: z
         .string()
@@ -44,7 +50,11 @@ export const projectFormSchema = z.object({
     role: projectRoleSchema.optional(),
     featured: z.boolean(),
     sortOrder: z.coerce.number().int().min(0, "Must be 0 or higher"),
+    languages: z.array(z.string()).default([]),
+    technologies: z.array(z.string()).default([]),
+    screenshots: z.array(projectScreenshotSchema).default([]),
 });
 
 export type ProjectFormInput = z.input<typeof projectFormSchema>;
 export type ProjectFormValues = z.output<typeof projectFormSchema>;
+export type ProjectScreenshotFormValue = z.output<typeof projectScreenshotSchema>;
