@@ -7,7 +7,6 @@ import type {
 import { Page } from "@/components/Page";
 import { TechnologyBadge } from "@/components/TechnologyBadge";
 import { getTechnologyBySlug } from "@/content/technologies";
-import { getRelatedProjects } from "@/content/projects";
 import { assetURL } from "@/utils/assets";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { FeaturedStar } from "@/components/FeaturedStar";
@@ -18,6 +17,7 @@ import { MarkdownRender } from "@/components/MarkdownRender";
 
 type ProjectDetailPageProps = {
     project: Project;
+    relatedProjects?: Project[];
 };
 
 const statusLabel = {
@@ -53,8 +53,10 @@ const roleLabel: Record<ProjectRole, string> = {
     team: "Team",
 };
 
-export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
-    const relatedProjects = getRelatedProjects(project, 3);
+export function ProjectDetailPage({
+    project,
+    relatedProjects = [],
+}: ProjectDetailPageProps) {
     const github = getLogo("github").icon;
 
     const languageItems = (project.languages ?? [])
@@ -202,7 +204,9 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                             </h3>
                         </div>
 
-                        <ProjectDescription description={project.description} />
+                        <div className="max-w-none">
+                            <MarkdownRender content={project.description} />
+                        </div>
                     </div>
                 </section>
             )}
@@ -245,13 +249,5 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
                 </section>
             )}
         </Page>
-    );
-}
-
-function ProjectDescription({ description }: { description: string }) {
-    return (
-        <div className="max-w-none">
-            <MarkdownRender content={description} />
-        </div>
     );
 }
