@@ -1,5 +1,4 @@
 import { cloneElement, type ReactElement } from "react";
-import type { IconResource } from "@/resources/logos";
 
 type IconLike = {
     icon: ReactElement

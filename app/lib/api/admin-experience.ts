@@ -13,7 +13,7 @@ function toDbPayload(values: ExperienceFormValues) {
         date_end: values.dateEnd || null,
         status: values.status,
         description: values.description,
-        keywords: values.keywords.map((keyword) => keyword.value),
+        keywords: values.keywords,
         sort_order: values.sortOrder,
     };
 }

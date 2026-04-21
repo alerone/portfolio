@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import type {
     FieldArrayWithId,
     FieldErrors,
@@ -6,8 +5,8 @@ import type {
     UseFieldArrayUpdate,
     UseFormRegister,
 } from "react-hook-form";
-import type { ProjectFormInput } from "../schemas/project-form.schema";
 import { ProjectImageUploadButton } from "./ProjectImageUploadButton";
+import type { ProjectFormInput } from "@/features/admin/projects/schemas/project-form.schema";
 
 type ProjectScreenshotFieldProps = {
     field: FieldArrayWithId<ProjectFormInput, "screenshots", "id">;

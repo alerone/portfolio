@@ -57,7 +57,7 @@ export function ProjectDetailPage({
     project,
     relatedProjects = [],
 }: ProjectDetailPageProps) {
-    const github = getLogo("github").icon;
+    const github = getLogo("github")!.icon;
 
     const languageItems = (project.languages ?? [])
         .map((slug) => getTechnologyBySlug(slug))
