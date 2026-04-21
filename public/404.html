@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      (function () {
+        var segmentCount = 1; // /portfolio
+        var locationPath = window.location.pathname;
+        var repoBase = locationPath.split("/").slice(0, 1 + segmentCount).join("/");
+        var rest = locationPath.slice(repoBase.length);
+        var search = window.location.search || "";
+        var hash = window.location.hash || "";
+
+        var target =
+          repoBase +
+          "/?p=" +
+          encodeURIComponent(rest + search + hash);
+
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
