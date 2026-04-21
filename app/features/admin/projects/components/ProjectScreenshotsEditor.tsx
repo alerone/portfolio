@@ -9,7 +9,7 @@ import type {
     FieldErrors,
 } from "react-hook-form";
 import type { ProjectFormInput } from "../schemas/project-form.schema";
-import { ProjectScreenshotField } from "./ProjectScreenshotField";
+import { ProjectScreenshotField } from "@/features/projects/components/ProjectScreenshotField";
 
 type ProjectScreenshotsEditorProps = {
     projectSlug: string;
