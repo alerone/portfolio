@@ -1,8 +1,8 @@
 import type { Config } from "@react-router/dev/config";
 
-const isProd = process.env.REACT_ROUTER_ENV === "prod";
+const BASE = process.env.REACT_ROUTER_ENV === "prod" ? "/portfolio/" : "/";
 
 export default {
     ssr: false,
-    basename: isProd ? "/portfolio" : "/",
+    basename: BASE,
 } satisfies Config;

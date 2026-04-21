@@ -14,6 +14,9 @@ type IconProps = {
 };
 
 export function Icon({ height = 24, width = 24, icon, label, iconFirst }: IconProps) {
+    if (!icon?.icon) {
+        return label ? <span>{label}</span> : null;
+    }
     const sizedIcon = cloneElement(icon.icon, {
         height,
         width,
