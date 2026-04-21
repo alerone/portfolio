@@ -10,6 +10,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+import { NavLink } from "react-router";
 
 export function Drawer() {
     return (
@@ -64,6 +65,9 @@ export function Drawer() {
                             <ThreeDMe size={225} />
                         </div>
                     </div>
+                    <SheetClose asChild>
+                        <NavLink to="/admin" className={"mt-10 w-full h-[80px]"} />
+                    </SheetClose>
                 </div>
             </SheetContent>
         </Sheet>
