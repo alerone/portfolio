@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Technology } from "@/content/content-types";
 import {
@@ -7,10 +7,10 @@ import {
     type TechnologyFormInput,
     type TechnologyFormValues,
 } from "../schemas/technology-form.schema";
-import { Button } from "@/components/ui/button";
-import { getLogoOptions, getLogo } from "@/resources/logos";
+import { getLogo } from "@/resources/logos";
 import { Icon } from "@/components/Icon";
 import { SubmitFormButton } from "../../projects/components/SubmitFormButton";
+import { SearchableIconSelect } from "../../components/SearchableIconSelect";
 
 type TechnologyFormProps = {
     initialTechnology?: Technology | null;
@@ -42,6 +42,7 @@ export function TechnologyForm({
         register,
         handleSubmit,
         watch,
+        control,
         formState: { errors, isSubmitting },
     } = useForm<TechnologyFormInput, unknown, TechnologyFormValues>({
         resolver: zodResolver(technologyFormSchema),
@@ -99,17 +100,17 @@ export function TechnologyForm({
                     </Field>
 
                     <Field label="Icon" error={errors.icon?.message}>
-                        <select
-                            {...register("icon")}
-                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
-                        >
-                            <option value="">No icon</option>
-                            {getLogoOptions().map((option) => (
-                                <option key={option.key} value={option.key}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
+                        <Controller
+                            control={control}
+                            name="icon"
+                            render={({ field }) => (
+                                <SearchableIconSelect
+                                    value={field.value ?? ""}
+                                    onChange={field.onChange}
+                                    emptyLabel="No icon"
+                                />
+                            )}
+                        />
                     </Field>
 
                     <div className="flex flex-col gap-2">

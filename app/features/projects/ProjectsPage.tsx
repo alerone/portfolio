@@ -2,27 +2,32 @@ import { useMemo, useState } from "react";
 import { Page } from "@/components/Page";
 import { ProjectsList } from "./components/ProjectsList";
 import { ProjectFilters } from "./components/ProjectFilters";
-import {
-    getFeaturedProjects,
-    getProjectStatuses,
-    getProjectTechnologySlugs,
-} from "@/content/projects";
 import { getTechnologyBySlug } from "@/content/technologies";
 import { useProjects } from "./hooks/useProjects";
 
 export function ProjectsPage() {
-    const { projects, isLoading, error } = useProjects()
+    const { projects, isLoading, error } = useProjects();
+
     const [status, setStatus] = useState("");
     const [technology, setTechnology] = useState("");
     const [featuredOnly, setFeaturedOnly] = useState(false);
 
-    const statuses = useMemo(() => getProjectStatuses(), []);
+    const statuses = useMemo(() => {
+        return [...new Set(projects.map((project) => project.status))];
+    }, [projects]);
+
     const filterTechnologies = useMemo(() => {
-        return getProjectTechnologySlugs()
+        const slugs = [...new Set(projects.flatMap((project) => project.technologies))];
+
+        return slugs
             .map((slug) => getTechnologyBySlug(slug))
             .filter((technology): technology is NonNullable<typeof technology> => Boolean(technology))
             .sort((a, b) => a.name.localeCompare(b.name));
-    }, []);
+    }, [projects]);
+
+    const featuredProjects = useMemo(() => {
+        return projects.filter((project) => project.featured);
+    }, [projects]);
 
     const filteredProjects = useMemo(() => {
         return projects.filter((project) => {
@@ -49,16 +54,17 @@ export function ProjectsPage() {
             className="flex flex-col items-center gap-8 pb-10"
         >
             {isLoading && (
-                <div className="w-full max-w-3xl surface rounded-[28px] p-5 text-white/70">
+                <div className="w-full max-w-3xl text-white/65">
                     Loading projects...
                 </div>
             )}
 
             {error && (
-                <div className="w-full max-w-3xl surface rounded-[28px] p-5 text-rose-300">
+                <div className="w-full max-w-3xl text-rose-300">
                     Error loading projects: {error}
                 </div>
             )}
+
             {!isLoading && !error && (
                 <>
                     <div className="w-full max-w-3xl">
@@ -76,19 +82,21 @@ export function ProjectsPage() {
                         />
                     </div>
 
-                    {!hasActiveFilters && getFeaturedProjects().length > 0 && (
+                    {!hasActiveFilters && featuredProjects.length > 0 && (
                         <section className="w-full flex flex-col items-center gap-4">
                             <div className="w-full max-w-3xl text-center">
                                 <p className="eyebrow mb-2">Highlights</p>
                                 <h2 className="section-title">Featured projects</h2>
                             </div>
-                            <ProjectsList projects={getFeaturedProjects()} featured />
+                            <ProjectsList projects={featuredProjects} featured />
                         </section>
                     )}
 
                     <section className="w-full flex flex-col items-center gap-4">
                         <div className="w-full max-w-3xl text-center">
-                            <p className="eyebrow mb-2">{hasActiveFilters ? "Filtered view" : "Archive"}</p>
+                            <p className="eyebrow mb-2">
+                                {hasActiveFilters ? "Filtered view" : "Archive"}
+                            </p>
                             <h2 className="section-title">
                                 {hasActiveFilters ? "Matching projects" : "All projects"}
                             </h2>

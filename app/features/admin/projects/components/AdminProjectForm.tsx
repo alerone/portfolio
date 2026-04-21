@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { Project, Technology } from "@/content/content-types";
 import {
@@ -7,11 +7,10 @@ import {
     type ProjectFormInput,
     type ProjectFormValues,
 } from "../schemas/project-form.schema";
-import { Button } from "@/components/ui/button";
-import { ProjectTechnologySelector } from "./ProjectTechnologySelector";
 import { ProjectScreenshotsEditor } from "./ProjectScreenshotsEditor";
-import { ProjectImageUploader } from "./ProjectImageUploader";
 import { SubmitFormButton } from "./SubmitFormButton";
+import { SearchableMultiSelect } from "../../components/SearchableMultiSelect";
+import { ProjectMainImageField } from "@/features/projects/components/ProjectMainImageField";
 
 type AdminProjectFormProps = {
     initialProject?: Project | null;
@@ -27,6 +26,8 @@ export function AdminProjectForm({
     onSubmit,
 }: AdminProjectFormProps) {
     const [formError, setFormError] = useState<string | null>(null);
+    const [languagesOpen, setLanguagesOpen] = useState(false);
+    const [technologiesOpen, setTechnologiesOpen] = useState(false);
 
     const defaultValues = useMemo<ProjectFormInput>(
         () => ({
@@ -77,8 +78,6 @@ export function AdminProjectForm({
         name: "screenshots",
     });
 
-    const selectedLanguages = watch("languages");
-    const selectedTechnologies = watch("technologies");
     const currentSlug = watch("slug");
     const currentImage = watch("image");
 
@@ -99,18 +98,6 @@ export function AdminProjectForm({
             ),
         [technologiesCatalog, languageOptions]
     );
-
-    function toggleInArray(field: "languages" | "technologies", slug: string) {
-        const current = watch(field);
-        const next = current!.includes(slug)
-            ? current!.filter((item) => item !== slug)
-            : [...current!, slug];
-
-        setValue(field, next, {
-            shouldDirty: true,
-            shouldValidate: true,
-        });
-    }
 
     async function submit(values: ProjectFormValues) {
         try {
@@ -158,13 +145,6 @@ export function AdminProjectForm({
                     <Field label="Live URL" error={errors.liveUrl?.message}>
                         <input
                             {...register("liveUrl")}
-                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
-                        />
-                    </Field>
-
-                    <Field label="Image URL or path" error={errors.image?.message}>
-                        <input
-                            {...register("image")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         />
                     </Field>
@@ -248,9 +228,16 @@ export function AdminProjectForm({
                 </label>
             </section>
 
-            <ProjectImageUploader
-                currentValue={currentImage}
+            <ProjectMainImageField
+                value={currentImage ?? ""}
+                error={errors.image?.message}
                 projectSlug={currentSlug}
+                onChange={(value) => {
+                    setValue("image", value, {
+                        shouldDirty: true,
+                        shouldValidate: true,
+                    });
+                }}
                 onUploaded={(publicUrl) => {
                     setValue("image", publicUrl, {
                         shouldDirty: true,
@@ -259,21 +246,79 @@ export function AdminProjectForm({
                 }}
             />
 
-            <ProjectTechnologySelector
-                title="Languages"
-                description="Select the main programming languages used in the project."
-                technologies={languageOptions}
-                selectedSlugs={selectedLanguages}
-                onToggle={(slug) => toggleInArray("languages", slug)}
-            />
+            <section
+                className={[
+                    "surface relative rounded-[28px] p-5 xl:p-6",
+                    languagesOpen ? "z-50" : "z-0",
+                ].join(" ")}
+            >
+                <div className="flex flex-col gap-5">
+                    <div>
+                        <p className="eyebrow mb-2">Stack</p>
+                        <h2 className="text-xl font-semibold tracking-tight text-white">
+                            Languages
+                        </h2>
+                        <p className="mt-1 text-sm text-white/55">
+                            Select the main programming languages used in the project.
+                        </p>
+                    </div>
 
-            <ProjectTechnologySelector
-                title="Stack"
-                description="Select the main tools, frameworks and services used in the project."
-                technologies={stackOptions}
-                selectedSlugs={selectedTechnologies}
-                onToggle={(slug) => toggleInArray("technologies", slug)}
-            />
+                    <Controller
+                        control={control}
+                        name="languages"
+                        render={({ field }) => (
+                            <SearchableMultiSelect
+                                value={field.value ?? []}
+                                onChange={field.onChange}
+                                options={languageOptions.map((technology) => ({
+                                    value: technology.slug,
+                                    label: technology.name,
+                                }))}
+                                title="languages"
+                                placeholder="Search language..."
+                                onOpenChange={setLanguagesOpen}
+                            />
+                        )}
+                    />
+                </div>
+            </section>
+
+            <section
+                className={[
+                    "surface relative rounded-[28px] p-5 xl:p-6",
+                    technologiesOpen ? "z-50" : "z-0",
+                ].join(" ")}
+            >
+                <div className="flex flex-col gap-5">
+                    <div>
+                        <p className="eyebrow mb-2">Stack</p>
+                        <h2 className="text-xl font-semibold tracking-tight text-white">
+                            Technologies
+                        </h2>
+                        <p className="mt-1 text-sm text-white/55">
+                            Select the main tools, frameworks and services used in the project.
+                        </p>
+                    </div>
+
+                    <Controller
+                        control={control}
+                        name="technologies"
+                        render={({ field }) => (
+                            <SearchableMultiSelect
+                                value={field.value ?? []}
+                                onChange={field.onChange}
+                                options={stackOptions.map((technology) => ({
+                                    value: technology.slug,
+                                    label: technology.name,
+                                }))}
+                                title="technologies"
+                                placeholder="Search technology..."
+                                onOpenChange={setTechnologiesOpen}
+                            />
+                        )}
+                    />
+                </div>
+            </section>
 
             <ProjectScreenshotsEditor
                 projectSlug={currentSlug}

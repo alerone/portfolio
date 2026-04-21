@@ -52,7 +52,7 @@ const roleLabel: Record<ProjectRole, string> = {
 };
 
 export function ProjectCard({ project, featured = false }: ProjectCardProps) {
-    const github = getLogo("github").icon;
+    const github = getLogo("github")!.icon;
 
     const languageItems = (project.languages ?? [])
         .map((slug) => getTechnologyBySlug(slug))
@@ -65,15 +65,18 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
         .filter(Boolean)
         .slice(0, featured ? 3 : 2);
 
+    const hasBottomSection =
+        languageItems.length > 0 || (featured && extraTechnologyItems.length > 0);
+
     return (
         <article
             className={[
-                "surface rounded-[22px] border border-white/10 transition duration-200",
+                "surface h-full rounded-[22px] border border-white/10 transition duration-200",
                 "hover:bg-white/[0.06] hover:border-white/16",
                 featured ? "p-4 xl:p-5" : "p-4",
             ].join(" ")}
         >
-            <div className="flex flex-col gap-3">
+            <div className="flex h-full flex-col">
                 <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                         <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -109,11 +112,11 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
                                     src={assetURL(project.image)}
                                     alt={project.name}
                                     loading="lazy"
-                                    className="mt-0.5 h-12 w-12 shrink-0 rounded-lg object-cover border border-white/10 bg-primary-700"
+                                    className="mt-0.5 h-12 w-12 shrink-0 rounded-lg border border-white/10 bg-primary-700 object-cover"
                                 />
                             )}
 
-                            <div className="min-w-0">
+                            <div className="min-w-0 flex-1">
                                 <Link to={`/projects/${project.slug}`} className="block">
                                     <h2 className="text-base font-semibold tracking-tight text-white xl:text-lg">
                                         {project.name}
@@ -139,28 +142,38 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
                     </div>
                 </div>
 
-                {languageItems.length > 0 && (
-                    <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[10px] uppercase tracking-[0.16em] text-white/40">
-                            Languages
-                        </span>
-                        {languageItems.map((language) =>
-                            language ? (
-                                <TechnologyBadge key={language.slug} technology={language} />
-                            ) : null
+                {hasBottomSection && (
+                    <div className="mt-auto flex flex-col gap-3 pt-4">
+                        {languageItems.length > 0 && (
+                            <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                                    Languages
+                                </span>
+                                {languageItems.map((language) =>
+                                    language ? (
+                                        <TechnologyBadge
+                                            key={language.slug}
+                                            technology={language}
+                                        />
+                                    ) : null
+                                )}
+                            </div>
                         )}
-                    </div>
-                )}
 
-                {featured && extraTechnologyItems.length > 0 && (
-                    <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-[10px] uppercase tracking-[0.16em] text-white/40">
-                            Stack
-                        </span>
-                        {extraTechnologyItems.map((technology) =>
-                            technology ? (
-                                <TechnologyBadge key={technology.slug} technology={technology} />
-                            ) : null
+                        {featured && extraTechnologyItems.length > 0 && (
+                            <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                                    Stack
+                                </span>
+                                {extraTechnologyItems.map((technology) =>
+                                    technology ? (
+                                        <TechnologyBadge
+                                            key={technology.slug}
+                                            technology={technology}
+                                        />
+                                    ) : null
+                                )}
+                            </div>
                         )}
                     </div>
                 )}

@@ -5,10 +5,6 @@ const logoKeys = getLogoKeys();
 
 export const workStatusSchema = z.enum(["intern", "employee"]);
 
-export const experienceKeywordSchema = z.object({
-    value: z.string().trim().min(1, "Keyword is required"),
-});
-
 export const experienceFormSchema = z.object({
     slug: z
         .string()
@@ -29,7 +25,7 @@ export const experienceFormSchema = z.object({
     dateEnd: z.string().optional().or(z.literal("")),
     status: workStatusSchema,
     description: z.string().trim().min(1, "Description is required"),
-    keywords: z.array(experienceKeywordSchema).default([]),
+    keywords: z.array(z.string().trim().min(1, "Keyword is required")).default([]),
     sortOrder: z.coerce.number().int().min(0, "Must be 0 or higher"),
 });
 
