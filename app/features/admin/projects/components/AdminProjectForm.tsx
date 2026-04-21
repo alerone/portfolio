@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ProjectTechnologySelector } from "./ProjectTechnologySelector";
 import { ProjectScreenshotsEditor } from "./ProjectScreenshotsEditor";
 import { ProjectImageUploader } from "./ProjectImageUploader";
+import { SubmitFormButton } from "./SubmitFormButton";
 
 type AdminProjectFormProps = {
     initialProject?: Project | null;
@@ -291,10 +292,10 @@ export function AdminProjectForm({
                 </div>
             )}
 
-            <div className="flex justify-end">
-                <Button type="submit" size="lg">
-                    {isSubmitting ? "Saving..." : submitLabel}
-                </Button>
+            <div className="sticky bottom-3 z-20">
+                <div className="flex justify-stretch sm:justify-end">
+                    <SubmitFormButton message={isSubmitting ? "Saving..." : submitLabel} />
+                </div>
             </div>
         </form>
     );

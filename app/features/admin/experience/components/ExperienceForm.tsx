@@ -1,62 +1,76 @@
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Technology } from "@/content/content-types";
+import type { ExperienceItem } from "@/content/content-types";
 import {
-    technologyFormSchema,
-    type TechnologyFormInput,
-    type TechnologyFormValues,
-} from "../schemas/technology-form.schema";
+    experienceFormSchema,
+    type ExperienceFormInput,
+    type ExperienceFormValues,
+} from "../schemas/experience-form.schema";
 import { Button } from "@/components/ui/button";
-import { getLogoOptions, getLogo } from "@/resources/logos";
+import { getLogo, getLogoOptions } from "@/resources/logos";
 import { Icon } from "@/components/Icon";
+import { ExperienceKeywordsEditor } from "./ExperienceKeywordEditor";
 import { SubmitFormButton } from "../../projects/components/SubmitFormButton";
 
-type TechnologyFormProps = {
-    initialTechnology?: Technology | null;
+type ExperienceFormProps = {
+    initialExperience?: ExperienceItem | null;
     submitLabel: string;
-    onSubmit: (values: TechnologyFormValues) => Promise<void>;
+    onSubmit: (values: ExperienceFormValues) => Promise<void>;
 };
 
-export function TechnologyForm({
-    initialTechnology,
+export function ExperienceForm({
+    initialExperience,
     submitLabel,
     onSubmit,
-}: TechnologyFormProps) {
+}: ExperienceFormProps) {
     const [formError, setFormError] = useState<string | null>(null);
 
-    const defaultValues = useMemo<TechnologyFormInput>(
+    const defaultValues = useMemo<ExperienceFormInput>(
         () => ({
-            slug: initialTechnology?.slug ?? "",
-            name: initialTechnology?.name ?? "",
-            description: initialTechnology?.description ?? "",
-            url: initialTechnology?.url ?? "",
-            icon: initialTechnology?.icon ?? "",
-            level: initialTechnology?.level ?? 0,
-            visible: initialTechnology?.visible ?? true,
+            slug: initialExperience?.slug ?? "",
+            companyName: initialExperience?.companyName ?? "",
+            companyUrl: initialExperience?.companyUrl ?? "",
+            companyIcon: initialExperience?.companyIcon ?? "",
+            dateStart: initialExperience?.dateStart ?? "",
+            dateEnd: initialExperience?.dateEnd ?? "",
+            status: initialExperience?.status ?? "intern",
+            description: initialExperience?.description ?? "",
+            keywords: (initialExperience?.keywords ?? []).map((keyword) => ({ value: keyword })),
+            sortOrder: 0,
         }),
-        [initialTechnology]
+        [initialExperience]
     );
 
     const {
         register,
         handleSubmit,
         watch,
+        control,
         formState: { errors, isSubmitting },
-    } = useForm<TechnologyFormInput, unknown, TechnologyFormValues>({
-        resolver: zodResolver(technologyFormSchema),
+    } = useForm<ExperienceFormInput, unknown, ExperienceFormValues>({
+        resolver: zodResolver(experienceFormSchema),
         defaultValues,
     });
 
-    const selectedIcon = watch("icon");
+    const {
+        fields: keywordFields,
+        append: appendKeyword,
+        remove: removeKeyword,
+    } = useFieldArray({
+        control,
+        name: "keywords",
+    });
+
+    const selectedIcon = watch("companyIcon");
     const selectedLogo = getLogo(selectedIcon);
 
-    async function submit(values: TechnologyFormValues) {
+    async function submit(values: ExperienceFormValues) {
         try {
             setFormError(null);
             await onSubmit(values);
         } catch (err) {
-            setFormError(err instanceof Error ? err.message : "Could not save technology");
+            setFormError(err instanceof Error ? err.message : "Could not save experience");
         }
     }
 
@@ -71,36 +85,49 @@ export function TechnologyForm({
                         />
                     </Field>
 
-                    <Field label="Name" error={errors.name?.message}>
+                    <Field label="Company name" error={errors.companyName?.message}>
                         <input
-                            {...register("name")}
+                            {...register("companyName")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         />
                     </Field>
 
-                    <Field label="URL" error={errors.url?.message}>
+                    <Field label="Company URL" error={errors.companyUrl?.message}>
                         <input
-                            {...register("url")}
+                            {...register("companyUrl")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         />
                     </Field>
 
-                    <Field label="Level" error={errors.level?.message}>
+                    <Field label="Status" error={errors.status?.message}>
                         <select
-                            {...register("level")}
+                            {...register("status")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         >
-                            <option value={0}>Very Basic</option>
-                            <option value={1}>Basic</option>
-                            <option value={2}>Medium</option>
-                            <option value={3}>Advanced</option>
-                            <option value={4}>Expert</option>
+                            <option value="intern">Intern</option>
+                            <option value="employee">Employee</option>
                         </select>
                     </Field>
 
-                    <Field label="Icon" error={errors.icon?.message}>
+                    <Field label="Start date" error={errors.dateStart?.message}>
+                        <input
+                            type="date"
+                            {...register("dateStart")}
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
+                        />
+                    </Field>
+
+                    <Field label="End date" error={errors.dateEnd?.message}>
+                        <input
+                            type="date"
+                            {...register("dateEnd")}
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
+                        />
+                    </Field>
+
+                    <Field label="Company icon" error={errors.companyIcon?.message}>
                         <select
-                            {...register("icon")}
+                            {...register("companyIcon")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         >
                             <option value="">No icon</option>
@@ -112,11 +139,19 @@ export function TechnologyForm({
                         </select>
                     </Field>
 
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium text-white/75">Preview</label>
+                    <Field label="Sort order" error={errors.sortOrder?.message}>
+                        <input
+                            type="number"
+                            {...register("sortOrder")}
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
+                        />
+                    </Field>
+
+                    <div className="md:col-span-2 flex flex-col gap-2">
+                        <label className="text-sm font-medium text-white/75">Icon preview</label>
                         <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 min-h-[50px] flex items-center">
                             {selectedLogo ? (
-                                <Icon icon={selectedLogo} height={20} width={20} label={selectedIcon} iconFirst />
+                                <Icon icon={selectedLogo} height={22} width={22} label={selectedIcon} iconFirst />
                             ) : (
                                 <span className="text-sm text-white/45">No icon selected</span>
                             )}
@@ -133,12 +168,15 @@ export function TechnologyForm({
                         />
                     </Field>
                 </div>
-
-                <label className="mt-4 inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white/80">
-                    <input type="checkbox" {...register("visible")} />
-                    Visible in public technologies page
-                </label>
             </section>
+
+            <ExperienceKeywordsEditor
+                fields={keywordFields}
+                register={register}
+                errors={errors}
+                append={appendKeyword}
+                remove={removeKeyword}
+            />
 
             {formError && (
                 <div className="rounded-2xl border border-rose-400/20 bg-rose-300/[0.08] px-4 py-3 text-sm text-rose-200">
