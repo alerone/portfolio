@@ -53,6 +53,7 @@ export function AdminLayout({
                         <AdminNavLink to="/admin/projects" label="Projects" />
                         <AdminNavLink to="/admin/technologies" label="Technologies" />
                         <AdminNavLink to="/admin/experience" label="Experience" />
+                        <AdminNavLink to="/admin/education" label="Education" />
                     </div>
                 </div>
             </div>

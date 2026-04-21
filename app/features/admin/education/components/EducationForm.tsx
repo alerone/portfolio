@@ -1,45 +1,49 @@
 import { useMemo, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { ExperienceItem } from "@/content/content-types";
+import type { EducationItem } from "@/content/content-types";
 import {
-    experienceFormSchema,
-    type ExperienceFormInput,
-    type ExperienceFormValues,
-} from "../schemas/experience-form.schema";
+    educationFormSchema,
+    type EducationFormInput,
+    type EducationFormValues,
+} from "../schemas/education-form.schema";
 import { getLogo } from "@/resources/logos";
 import { Icon } from "@/components/Icon";
+import { EducationTextListEditor } from "./EducationTextListEditor";
 import { SubmitFormButton } from "../../projects/components/SubmitFormButton";
 import { SearchableIconSelect } from "../../components/SearchableIconSelect";
 import { TagInput } from "../../components/TagInput";
 
-type ExperienceFormProps = {
-    initialExperience?: ExperienceItem | null;
+type EducationFormProps = {
+    initialEducation?: EducationItem | null;
     submitLabel: string;
-    onSubmit: (values: ExperienceFormValues) => Promise<void>;
+    onSubmit: (values: EducationFormValues) => Promise<void>;
 };
 
-export function ExperienceForm({
-    initialExperience,
+export function EducationForm({
+    initialEducation,
     submitLabel,
     onSubmit,
-}: ExperienceFormProps) {
+}: EducationFormProps) {
     const [formError, setFormError] = useState<string | null>(null);
 
-    const defaultValues = useMemo<ExperienceFormInput>(
+    const defaultValues = useMemo<EducationFormInput>(
         () => ({
-            slug: initialExperience?.slug ?? "",
-            companyName: initialExperience?.companyName ?? "",
-            companyUrl: initialExperience?.companyUrl ?? "",
-            companyIcon: initialExperience?.companyIcon ?? "",
-            dateStart: initialExperience?.dateStart ?? "",
-            dateEnd: initialExperience?.dateEnd ?? "",
-            status: initialExperience?.status ?? "intern",
-            description: initialExperience?.description ?? "",
-            keywords: initialExperience?.keywords ?? [],
+            slug: initialEducation?.slug ?? "",
+            title: initialEducation?.title ?? "",
+            institution: initialEducation?.institution ?? "",
+            institutionUrl: initialEducation?.institutionUrl ?? "",
+            institutionIcon: initialEducation?.institutionIcon ?? "",
+            dateStart: initialEducation?.dateStart ?? "",
+            dateEnd: initialEducation?.dateEnd ?? "",
+            status: initialEducation?.status ?? "completed",
+            grade: initialEducation?.grade ?? "",
+            description: initialEducation?.description ?? "",
+            honors: initialEducation?.honors ?? [],
+            highlights: initialEducation?.highlights ?? [],
             sortOrder: 0,
         }),
-        [initialExperience]
+        [initialEducation]
     );
 
     const {
@@ -48,29 +52,20 @@ export function ExperienceForm({
         watch,
         control,
         formState: { errors, isSubmitting },
-    } = useForm<ExperienceFormInput, unknown, ExperienceFormValues>({
-        resolver: zodResolver(experienceFormSchema),
+    } = useForm<EducationFormInput, unknown, EducationFormValues>({
+        resolver: zodResolver(educationFormSchema),
         defaultValues,
     });
 
-    const {
-        fields: keywordFields,
-        append: appendKeyword,
-        remove: removeKeyword,
-    } = useFieldArray({
-        control,
-        name: "keywords",
-    });
-
-    const selectedIcon = watch("companyIcon");
+    const selectedIcon = watch("institutionIcon");
     const selectedLogo = getLogo(selectedIcon);
 
-    async function submit(values: ExperienceFormValues) {
+    async function submit(values: EducationFormValues) {
         try {
             setFormError(null);
             await onSubmit(values);
         } catch (err) {
-            setFormError(err instanceof Error ? err.message : "Could not save experience");
+            setFormError(err instanceof Error ? err.message : "Could not save education");
         }
     }
 
@@ -85,16 +80,23 @@ export function ExperienceForm({
                         />
                     </Field>
 
-                    <Field label="Company name" error={errors.companyName?.message}>
+                    <Field label="Title" error={errors.title?.message}>
                         <input
-                            {...register("companyName")}
+                            {...register("title")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         />
                     </Field>
 
-                    <Field label="Company URL" error={errors.companyUrl?.message}>
+                    <Field label="Institution" error={errors.institution?.message}>
                         <input
-                            {...register("companyUrl")}
+                            {...register("institution")}
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
+                        />
+                    </Field>
+
+                    <Field label="Institution URL" error={errors.institutionUrl?.message}>
+                        <input
+                            {...register("institutionUrl")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         />
                     </Field>
@@ -104,9 +106,16 @@ export function ExperienceForm({
                             {...register("status")}
                             className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
                         >
-                            <option value="intern">Intern</option>
-                            <option value="employee">Employee</option>
+                            <option value="completed">Completed</option>
+                            <option value="in_progress">In progress</option>
                         </select>
+                    </Field>
+
+                    <Field label="Grade" error={errors.grade?.message}>
+                        <input
+                            {...register("grade")}
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
+                        />
                     </Field>
 
                     <Field label="Start date" error={errors.dateStart?.message}>
@@ -125,10 +134,10 @@ export function ExperienceForm({
                         />
                     </Field>
 
-                    <Field label="Company icon" error={errors.companyIcon?.message}>
+                    <Field label="Institution icon" error={errors.institutionIcon?.message}>
                         <Controller
                             control={control}
-                            name="companyIcon"
+                            name="institutionIcon"
                             render={({ field }) => (
                                 <SearchableIconSelect
                                     value={field.value ?? ""}
@@ -151,7 +160,7 @@ export function ExperienceForm({
                         <label className="text-sm font-medium text-white/75">Icon preview</label>
                         <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 min-h-[50px] flex items-center">
                             {selectedLogo ? (
-                                <Icon icon={selectedLogo} height={22} width={22} label={selectedIcon} iconFirst />
+                                <Icon icon={selectedLogo} height={60} width={60} label={selectedIcon} iconFirst />
                             ) : (
                                 <span className="text-sm text-white/45">No icon selected</span>
                             )}
@@ -174,25 +183,42 @@ export function ExperienceForm({
                 <div className="mb-5">
                     <p className="eyebrow mb-2">Metadata</p>
                     <h2 className="text-xl font-semibold tracking-tight text-white">
-                        Keywords
+                        Honors
                     </h2>
                 </div>
 
                 <Controller
                     control={control}
-                    name="keywords"
+                    name="honors"
                     render={({ field }) => (
                         <TagInput
                             value={field.value ?? []}
                             onChange={field.onChange}
-                            placeholder="Write a keyword and press Enter"
+                            placeholder="Write an honor and press Enter"
                         />
                     )}
                 />
+            </section>
 
-                {errors.keywords?.message && (
-                    <p className="mt-2 text-xs text-rose-300">{errors.keywords.message}</p>
-                )}
+            <section className="surface rounded-[28px] p-5 xl:p-6">
+                <div className="mb-5">
+                    <p className="eyebrow mb-2">Metadata</p>
+                    <h2 className="text-xl font-semibold tracking-tight text-white">
+                        Highlights
+                    </h2>
+                </div>
+
+                <Controller
+                    control={control}
+                    name="highlights"
+                    render={({ field }) => (
+                        <TagInput
+                            value={field.value ?? []}
+                            onChange={field.onChange}
+                            placeholder="Write a highlight and press Enter"
+                        />
+                    )}
+                />
             </section>
 
             {formError && (
