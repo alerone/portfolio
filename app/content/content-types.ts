@@ -53,7 +53,7 @@ export type ExperienceItem = {
     companyUrl?: string;
     companyIcon: LogoKey;
     dateStart: string;
-    dateEnd: string;
+    dateEnd?: string;
     status: WorkStatus;
     description: string;
     keywords?: string[];
