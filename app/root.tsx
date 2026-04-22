@@ -14,6 +14,7 @@ import { SiteFooter } from "./components/layout/SiteFooter";
 import { useScrollVisibility } from "./hooks/useScrollVisibility";
 
 export const links: Route.LinksFunction = () => [
+    { rel: "icon", type: "image/png", href: `${import.meta.env.BASE_URL}/favicon.png` },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {
         rel: "preconnect",
