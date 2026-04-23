@@ -9,6 +9,7 @@ type TechnologyRow = {
     icon_key: string | null;
     level: 0 | 1 | 2 | 3 | 4;
     visible: boolean;
+    kind: Technology["kind"] | null;
 };
 
 function mapTechnology(row: TechnologyRow): Technology {
@@ -20,13 +21,14 @@ function mapTechnology(row: TechnologyRow): Technology {
         icon: (row.icon_key as Technology["icon"]) ?? undefined,
         level: row.level,
         visible: row.visible,
+        kind: row.kind ?? "tool",
     };
 }
 
 export async function fetchTechnologies(): Promise<Technology[]> {
     const { data, error } = await supabase
         .from("technologies")
-        .select("slug, name, description, url, icon_key, level, visible")
+        .select("slug, name, description, url, icon_key, level, visible, kind")
         .order("name", { ascending: true });
 
     if (error) throw error;

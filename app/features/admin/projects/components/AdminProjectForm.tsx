@@ -83,10 +83,8 @@ export function AdminProjectForm({
 
     const languageOptions = useMemo(
         () =>
-            technologiesCatalog.filter((technology) =>
-                ["go", "python", "typescript", "javascript", "kotlin"].includes(
-                    technology.slug
-                )
+            technologiesCatalog.filter(
+                (technology) => technology.kind === "language"
             ),
         [technologiesCatalog]
     );
@@ -94,9 +92,9 @@ export function AdminProjectForm({
     const stackOptions = useMemo(
         () =>
             technologiesCatalog.filter(
-                (technology) => !languageOptions.some((lang) => lang.slug === technology.slug)
+                (technology) => technology.kind !== "language"
             ),
-        [technologiesCatalog, languageOptions]
+        [technologiesCatalog]
     );
 
     async function submit(values: ProjectFormValues) {

@@ -12,6 +12,7 @@ function toDbPayload(values: TechnologyFormValues) {
         icon_key: values.icon || null,
         level: values.level,
         visible: values.visible,
+        kind: values.kind,
     };
 }
 

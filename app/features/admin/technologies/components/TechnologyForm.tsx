@@ -34,6 +34,7 @@ export function TechnologyForm({
             icon: initialTechnology?.icon ?? "",
             level: initialTechnology?.level ?? 0,
             visible: initialTechnology?.visible ?? true,
+            kind: initialTechnology?.kind ?? "tool",
         }),
         [initialTechnology]
     );
@@ -124,6 +125,20 @@ export function TechnologyForm({
                         </div>
                     </div>
                 </div>
+
+                <Field label="Kind" error={errors.kind?.message}>
+                    <select
+                        {...register("kind")}
+                        className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none"
+                    >
+                        <option value="language">Language</option>
+                        <option value="tool">Tool</option>
+                        <option value="framework">Framework</option>
+                        <option value="service">Service</option>
+                        <option value="platform">Platform</option>
+                        <option value="library">Library</option>
+                    </select>
+                </Field>
 
                 <div className="mt-4">
                     <Field label="Description" error={errors.description?.message}>

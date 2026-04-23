@@ -2,6 +2,14 @@ import { z } from "zod";
 import { getLogoKeys } from "@/resources/logos";
 
 const logoKeys = getLogoKeys();
+export const technologyKindSchema = z.enum([
+    "language",
+    "tool",
+    "framework",
+    "service",
+    "platform",
+    "library",
+]);
 
 export const technologyFormSchema = z.object({
     slug: z
@@ -22,6 +30,7 @@ export const technologyFormSchema = z.object({
         }),
     level: z.coerce.number().int().min(0).max(4),
     visible: z.boolean(),
+    kind: technologyKindSchema.default("tool")
 });
 
 export type TechnologyFormInput = z.input<typeof technologyFormSchema>;

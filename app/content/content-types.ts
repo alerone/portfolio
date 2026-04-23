@@ -3,6 +3,7 @@ import type { LogoKey } from "@/resources/logos";
 export type ProjectStatus = "completed" | "planned" | "in_progress"
 export type WorkStatus = "intern" | "employee"
 export type SkillLevel = 0 | 1 | 2 | 3 | 4
+export type TechnologyKind = "language" | "tool" | "framework" | "service" | "platform" | "library"
 
 export type EducationStatus = "completed" | "in_progress"
 
@@ -68,6 +69,7 @@ export type Technology = {
     level: SkillLevel;
     keywords?: string[];
     visible?: boolean;
+    kind?: TechnologyKind;
 }
 
 export type EducationItem = {

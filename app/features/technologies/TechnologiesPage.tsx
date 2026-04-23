@@ -1,6 +1,5 @@
 import { Page } from "@/components/Page";
 import { TechList } from "./components/TechList";
-import { getVisibleTechnologies } from "@/content/technologies";
 import { useTechnologies } from "@/hooks/useTechnologies";
 
 export function TechnologiesPage() {
