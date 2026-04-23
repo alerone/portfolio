@@ -2,15 +2,20 @@ import { useMemo, useState } from "react";
 import { Page } from "@/components/Page";
 import { ProjectsList } from "./components/ProjectsList";
 import { ProjectFilters } from "./components/ProjectFilters";
-import { getTechnologyBySlug } from "@/content/technologies";
 import { useProjects } from "./hooks/useProjects";
+import { useTechnologies } from "@/hooks/useTechnologies";
 
 export function ProjectsPage() {
     const { projects, isLoading, error } = useProjects();
+    const { technologies } = useTechnologies()
 
     const [status, setStatus] = useState("");
     const [technology, setTechnology] = useState("");
     const [featuredOnly, setFeaturedOnly] = useState(false);
+
+    const technologyBySlug = useMemo(() => {
+        return new Map(technologies.map((tech) => [tech.slug, tech]))
+    }, [technologies])
 
     const statuses = useMemo(() => {
         return [...new Set(projects.map((project) => project.status))];
@@ -20,7 +25,7 @@ export function ProjectsPage() {
         const slugs = [...new Set(projects.flatMap((project) => project.technologies))];
 
         return slugs
-            .map((slug) => getTechnologyBySlug(slug))
+            .map((slug) => technologyBySlug.get(slug))
             .filter((technology): technology is NonNullable<typeof technology> => Boolean(technology))
             .sort((a, b) => a.name.localeCompare(b.name));
     }, [projects]);

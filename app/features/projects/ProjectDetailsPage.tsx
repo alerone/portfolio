@@ -6,7 +6,6 @@ import type {
 } from "@/content/content-types";
 import { Page } from "@/components/Page";
 import { TechnologyBadge } from "@/components/TechnologyBadge";
-import { getTechnologyBySlug } from "@/content/technologies";
 import { assetURL } from "@/utils/assets";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { FeaturedStar } from "@/components/FeaturedStar";
@@ -14,6 +13,8 @@ import { getLogo } from "@/resources/logos";
 import { IconA } from "@/components/IconA";
 import { ProjectScreenshotsCarousel } from "./components/ProjectScreenshotsCarrousel";
 import { MarkdownRender } from "@/components/MarkdownRender";
+import { useTechnologies } from "@/hooks/useTechnologies";
+import { useMemo } from "react";
 
 type ProjectDetailPageProps = {
     project: Project;
@@ -57,15 +58,21 @@ export function ProjectDetailPage({
     project,
     relatedProjects = [],
 }: ProjectDetailPageProps) {
-    const github = getLogo("github").icon;
+    const github = getLogo("github")!.icon;
+
+    const { technologies } = useTechnologies()
+
+    const techBySlug = useMemo(() => {
+        return new Map(technologies.map(tech => [tech.slug, tech]))
+    }, [technologies])
 
     const languageItems = (project.languages ?? [])
-        .map((slug) => getTechnologyBySlug(slug))
+        .map((slug) => techBySlug.get(slug))
         .filter(Boolean);
 
     const technologyItems = project.technologies
         .filter((slug) => !(project.languages ?? []).includes(slug))
-        .map((slug) => getTechnologyBySlug(slug))
+        .map((slug) => techBySlug.get(slug))
         .filter(Boolean);
 
     return (

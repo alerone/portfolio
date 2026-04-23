@@ -35,3 +35,15 @@ export async function fetchTechnologies(): Promise<Technology[]> {
 
     return (data as TechnologyRow[]).map(mapTechnology);
 }
+
+export async function fetchTechnologyBySlug(slug: string): Promise<Technology | null> {
+    const { data, error } = await supabase
+        .from("technologies")
+        .select("slug, name, description, url, icon_key, level, visible, kind")
+        .eq("slug", slug)
+        .maybeSingle()
+    if (error) throw error;
+    if (!data) return null
+
+    return mapTechnology(data as TechnologyRow)
+}

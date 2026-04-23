@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { Technology } from "@/content/content-types";
 import type { TechnologyFormValues } from "@/features/admin/technologies/schemas/technology-form.schema";
-import { fetchTechnologies } from "@/lib/api/technologies";
+import { fetchTechnologyBySlug } from "./technologies";
 
 function toDbPayload(values: TechnologyFormValues) {
     return {
@@ -14,11 +14,6 @@ function toDbPayload(values: TechnologyFormValues) {
         visible: values.visible,
         kind: values.kind,
     };
-}
-
-export async function fetchTechnologyBySlug(slug: string): Promise<Technology | null> {
-    const technologies = await fetchTechnologies();
-    return technologies.find((technology) => technology.slug === slug) ?? null;
 }
 
 export async function createTechnology(values: TechnologyFormValues): Promise<Technology> {
