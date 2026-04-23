@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Technology } from "@/content/content-types";
-import { fetchTechnologyBySlug } from "@/lib/api/admin-technologies";
+import { fetchTechnologyBySlug } from "@/lib/api/technologies";
 
 export function useAdminTechnology(slug?: string) {
     const [technology, setTechnology] = useState<Technology | null>(null);

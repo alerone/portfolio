@@ -25,7 +25,7 @@ export async function createTechnology(values: TechnologyFormValues): Promise<Te
 
     if (error) throw error;
 
-    const technology = await fetchTechnologyBySlug(data.slug as string);
+    const technology = await fetchTechnologyBySlug(data.slug);
     if (!technology) {
         throw new Error("Technology created but could not be fetched afterwards.");
     }
@@ -46,7 +46,7 @@ export async function updateTechnology(
 
     if (error) throw error;
 
-    const technology = await fetchTechnologyBySlug(data.slug as string);
+    const technology = await fetchTechnologyBySlug(data.slug);
     if (!technology) {
         throw new Error("Technology updated but could not be fetched afterwards.");
     }
