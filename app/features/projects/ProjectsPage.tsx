@@ -40,6 +40,11 @@ export function ProjectsPage() {
             if (technology && !project.technologies.includes(technology)) return false;
             if (featuredOnly && !project.featured) return false;
             return true;
+        }).sort((a, b) => {
+            if (a.status === "in_progress" && b.status !== "in_progress") return -1;
+            if (a.status !== "in_progress" && b.status === "in_progress") return 1;
+
+            return 0;
         });
     }, [projects, status, technology, featuredOnly]);
 
