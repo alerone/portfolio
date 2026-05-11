@@ -12,6 +12,7 @@ import "./app.css";
 import { SiteHeader } from "./components/layout/SiteHeader";
 import { SiteFooter } from "./components/layout/SiteFooter";
 import { useScrollVisibility } from "./hooks/useScrollVisibility";
+import { useTelegramVisitNotification } from "./hooks/useTelegramVisitNotification";
 
 export const links: Route.LinksFunction = () => [
     { rel: "icon", type: "image/png", href: `${import.meta.env.BASE_URL}/favicon.png` },
@@ -51,6 +52,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
     const isVisible = useScrollVisibility(0.92);
+
+    useTelegramVisitNotification()
 
     return (
         <div className="min-h-screen flex flex-col">
