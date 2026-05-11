@@ -7,6 +7,19 @@ const ALLOWED_ORIGINS = new Set([
     "http://localhost:5173",
 ]);
 
+function formatDateTime(date = new Date()) {
+    return new Intl.DateTimeFormat("es-ES", {
+        timeZone: "Europe/Madrid",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+    }).format(date).replace(",", "");
+}
+
 function getCorsHeaders(origin: string | null) {
     const allowedOrigin = origin && ALLOWED_ORIGINS.has(origin)
         ? origin
@@ -84,7 +97,7 @@ Deno.serve(async (req) => {
         `🕒 <b>Zona horaria:</b> ${escapeHtml(timezone)}`,
         `🖥️ <b>Pantalla:</b> ${escapeHtml(screen)}`,
         "",
-        `⏱️ <b>Hora:</b> ${new Date().toISOString()}`,
+        `⏱️ <b>Hora:</b> ${formatDateTime()}`,
     ].join("\n");
 
     const telegramResponse = await fetch(
