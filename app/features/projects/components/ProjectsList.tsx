@@ -1,27 +1,24 @@
-import type { Project } from "@/content/content-types";
+import type { Project, Technology } from "@/content/content-types";
 import { ProjectCard } from "./ProjectCard";
 
 export function ProjectsList({
     projects,
+    technologies,
     featured = false,
 }: {
     projects: Project[];
+    technologies: Technology[];
     featured?: boolean;
 }) {
-    if (featured) {
-        return (
-            <div className="grid gap-5 xl:grid-cols-2">
-                {projects.map((project) => (
-                    <ProjectCard key={project.slug} project={project} featured />
-                ))}
-            </div>
-        );
-    }
-
     return (
-        <div className="grid gap-4">
+        <div className="grid w-full gap-4 md:grid-cols-2">
             {projects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
+                <ProjectCard
+                    key={project.slug}
+                    project={project}
+                    technologies={technologies}
+                    featured={featured}
+                />
             ))}
         </div>
     );

@@ -1,10 +1,11 @@
 import { Link } from "react-router";
-import { getTechnologyBySlug } from "@/content/technologies";
+import { getTechnologyBySlug, technologies } from "@/content/technologies";
 import type {
     Project,
     ProjectCategory,
     ProjectRole,
     ProjectStatus,
+    Technology,
 } from "@/content/content-types";
 import { TechnologyBadge } from "@/components/TechnologyBadge";
 import { getLogo } from "@/resources/logos";
@@ -12,10 +13,12 @@ import { IconA } from "@/components/IconA";
 import { ExternalLink } from "lucide-react";
 import { assetURL } from "@/utils/assets";
 import { FeaturedStar } from "@/components/FeaturedStar";
+import { useMemo } from "react";
 
 type ProjectCardProps = {
     project: Project;
     featured?: boolean;
+    technologies: Technology[];
 };
 
 const statusLabel: Record<ProjectStatus, string> = {
@@ -51,19 +54,29 @@ const roleLabel: Record<ProjectRole, string> = {
     team: "Team",
 };
 
-export function ProjectCard({ project, featured = false }: ProjectCardProps) {
+export function ProjectCard({
+    project,
+    featured = false,
+    technologies
+}: ProjectCardProps) {
     const github = getLogo("github")!.icon;
 
+
+    const technologyBySlug = useMemo(() => {
+        return new Map(technologies.map((tech) => [tech.slug, tech]));
+    }, [technologies]);
+
     const languageItems = (project.languages ?? [])
-        .map((slug) => getTechnologyBySlug(slug))
-        .filter(Boolean)
+        .map((slug) => technologyBySlug.get(slug))
+        .filter((tech): tech is Technology => Boolean(tech))
         .slice(0, featured ? 3 : 2);
 
     const extraTechnologyItems = project.technologies
         .filter((slug) => !(project.languages ?? []).includes(slug))
-        .map((slug) => getTechnologyBySlug(slug))
-        .filter(Boolean)
+        .map((slug) => technologyBySlug.get(slug))
+        .filter((tech): tech is Technology => Boolean(tech))
         .slice(0, featured ? 3 : 2);
+
 
     const hasBottomSection =
         languageItems.length > 0 || (featured && extraTechnologyItems.length > 0);
@@ -71,9 +84,9 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
     return (
         <article
             className={[
-                "surface h-full rounded-[22px] border border-white/10 transition duration-200",
+                "surface flex h-full min-h-[220px] rounded-[22px] border border-white/10 transition duration-200",
                 "hover:bg-white/[0.06] hover:border-white/16",
-                featured ? "p-4 xl:p-5" : "p-4",
+                "p-4",
             ].join(" ")}
         >
             <div className="flex h-full flex-col">
@@ -123,7 +136,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
                                     </h2>
                                 </Link>
 
-                                <p className="mt-2 text-sm leading-6 text-white/70">
+                                <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-white/70">
                                     {project.summary}
                                 </p>
                             </div>
