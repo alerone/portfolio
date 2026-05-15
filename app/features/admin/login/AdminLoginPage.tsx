@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router";
 import { Page } from "@/components/Page";
 import { signInWithPassword } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { markAsOwner } from "@/utils/visitor-notifications";
 
 export function AdminLoginPage() {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export function AdminLoginPage() {
             setError(null);
 
             await signInWithPassword(email, password);
+            markAsOwner();
             navigate(redirectTo, { replace: true });
         } catch (err) {
             setError(err instanceof Error ? err.message : "Login failed");

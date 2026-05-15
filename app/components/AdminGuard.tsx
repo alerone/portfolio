@@ -1,10 +1,16 @@
 import { useAuthSession } from "@/hooks/useAuthSession";
-import type { ReactNode } from "react";
+import { markAsOwner } from "@/utils/visitor-notifications";
+import { useEffect, type ReactNode } from "react";
 import { Navigate, useLocation } from "react-router";
 
 export function AdminGuard({ children }: { children: ReactNode }) {
     const { isLoading, isAuthenticated } = useAuthSession()
     const location = useLocation()
+
+    useEffect(() => {
+        if (isAuthenticated)
+            markAsOwner();
+    }, [isAuthenticated])
 
     if (isLoading) {
         return (

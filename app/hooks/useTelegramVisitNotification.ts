@@ -1,3 +1,4 @@
+import { isOwnerDevice } from "@/utils/visitor-notifications";
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 
@@ -11,6 +12,7 @@ function shouldSkipNotification() {
         /bot|crawler|spider|crawling|preview|facebookexternalhit|whatsapp|telegrambot/i.test(
             navigator.userAgent
         );
+    if (isOwnerDevice()) return true;
 
     if (isBot) return true;
 
