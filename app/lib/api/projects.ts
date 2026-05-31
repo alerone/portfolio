@@ -1,5 +1,14 @@
-import { supabase } from "@/lib/supabase";
 import type { Project } from "@/content/content-types";
+import { supabase } from "@/lib/supabase";
+
+type TechnologyRelation =
+    | {
+        slug: string;
+    }
+    | {
+        slug: string;
+    }[]
+    | null;
 
 type ProjectRow = {
     id: number;
@@ -14,26 +23,29 @@ type ProjectRow = {
     category: Project["category"] | null;
     role: Project["role"] | null;
     featured: boolean;
+    featured_in_resume: boolean | null;
+    resume_role_en: string | null;
+    resume_role_es: string | null;
+    resume_bullets_en: string[] | null;
+    resume_bullets_es: string[] | null;
     sort_order: number;
-    project_screenshots: {
+    project_screenshots:
+    | {
         url: string;
         alt: string;
         sort_order: number;
-    }[] | null;
-    project_technologies: {
+    }[]
+    | null;
+    project_technologies:
+    | {
         is_language: boolean;
         sort_order: number;
-        technologies: {
-            slug: string;
-        } | {
-            slug: string;
-        }[] | null;
-    }[] | null;
+        technologies: TechnologyRelation;
+    }[]
+    | null;
 };
 
-function normalizeTechnologySlug(
-    tech: { slug: string } | { slug: string }[] | null
-): string | null {
+function normalizeTechnologySlug(tech: TechnologyRelation): string | null {
     if (!tech) return null;
     if (Array.isArray(tech)) return tech[0]?.slug ?? null;
     return tech.slug;
@@ -74,8 +86,18 @@ function mapProject(row: ProjectRow): Project {
         role: row.role ?? undefined,
         technologies,
         languages,
-        screenshots: screenshots.length ? screenshots : undefined,
+        screenshots: screenshots.length > 0 ? screenshots : undefined,
         featured: row.featured,
+
+        featuredInResume: row.featured_in_resume ?? false,
+        resumeRole: {
+            en: row.resume_role_en ?? undefined,
+            es: row.resume_role_es ?? undefined,
+        },
+        resumeBullets: {
+            en: row.resume_bullets_en ?? [],
+            es: row.resume_bullets_es ?? [],
+        },
     };
 }
 
@@ -83,35 +105,41 @@ async function fetchProjectsRaw(): Promise<Project[]> {
     const { data, error } = await supabase
         .from("projects")
         .select(`
-      id,
-      slug,
-      name,
-      summary,
-      description,
-      github_url,
-      live_url,
-      image_url,
-      status,
-      category,
-      role,
-      featured,
-      sort_order,
-      project_screenshots (
-        url,
-        alt,
-        sort_order
-      ),
-      project_technologies (
-        is_language,
-        sort_order,
-        technologies (
-          slug
-        )
-      )
-    `)
+            id,
+            slug,
+            name,
+            summary,
+            description,
+            github_url,
+            live_url,
+            image_url,
+            status,
+            category,
+            role,
+            featured,
+            featured_in_resume,
+            resume_role_en,
+            resume_role_es,
+            resume_bullets_en,
+            resume_bullets_es,
+            sort_order,
+            project_screenshots (
+                url,
+                alt,
+                sort_order
+            ),
+            project_technologies (
+                is_language,
+                sort_order,
+                technologies (
+                    slug
+                )
+            )
+        `)
         .order("sort_order", { ascending: true });
 
     if (error) throw error;
+
     return (data as ProjectRow[]).map(mapProject);
 }
 
@@ -121,6 +149,7 @@ export async function fetchProjects(): Promise<Project[]> {
 
 export async function fetchProjectBySlug(slug: string): Promise<Project | null> {
     const projects = await fetchProjectsRaw();
+
     return projects.find((project) => project.slug === slug) ?? null;
 }
 

@@ -53,6 +53,14 @@ export const projectFormSchema = z.object({
     languages: z.array(z.string()).default([]),
     technologies: z.array(z.string()).default([]),
     screenshots: z.array(projectScreenshotSchema).default([]),
+
+    featuredInResume: z.boolean().default(false),
+
+    resumeRoleEn: z.string().optional().default(""),
+    resumeRoleEs: z.string().optional().default(""),
+
+    resumeBulletsEn: z.array(z.string()).default([]),
+    resumeBulletsEs: z.array(z.string()).default([]),
 });
 
 export type ProjectFormInput = z.input<typeof projectFormSchema>;

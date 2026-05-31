@@ -4,9 +4,12 @@ import { useLocation } from "react-router";
 
 const NOTIFICATION_STORAGE_KEY = "portfolio:last-visit-notification";
 const NOTIFICATION_COOLDOWN_MS = 1000 * 60 * 30;
+const DEBUG_VISITS = true
 
 function shouldSkipNotification() {
     if (typeof window === "undefined") return true;
+
+    if (isLocalhost()) return true;
 
     const isBot =
         /bot|crawler|spider|crawling|preview|facebookexternalhit|whatsapp|telegrambot/i.test(
@@ -27,6 +30,18 @@ function shouldSkipNotification() {
     if (Number.isNaN(lastTimestamp)) return false;
 
     return Date.now() - lastTimestamp < NOTIFICATION_COOLDOWN_MS;
+}
+
+function isLocalhost() {
+    if (typeof window === "undefined") return true;
+    const { hostname } = window.location
+
+    return (
+        hostname === "localhost" ||
+        hostname === "127.0.0.1" ||
+        hostname === "::1" ||
+        hostname.endsWith(".local")
+    )
 }
 
 function markNotificationSent() {
@@ -62,6 +77,7 @@ export function useTelegramVisitNotification() {
                         timezone:
                             Intl.DateTimeFormat().resolvedOptions().timeZone,
                         screen: `${window.screen.width}x${window.screen.height}`,
+                        userAgent: DEBUG_VISITS ? navigator.userAgent : undefined,
                     }),
                 });
 

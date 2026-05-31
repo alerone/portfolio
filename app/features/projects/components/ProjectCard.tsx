@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import { getTechnologyBySlug, technologies } from "@/content/technologies";
 import type {
     Project,
     ProjectCategory,

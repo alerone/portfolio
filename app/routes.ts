@@ -22,5 +22,6 @@ export default [
     route("admin/education", "routes/admin-education.tsx"),
     route("admin/education/new", "routes/admin-education-new.tsx"),
     route("admin/education/:slug/edit", "routes/admin-education-edit.tsx"),
+    route("admin/cv", "routes/admin-cv.tsx"),
 ] satisfies RouteConfig;
 

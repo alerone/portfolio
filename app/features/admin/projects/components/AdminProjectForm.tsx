@@ -11,6 +11,7 @@ import { ProjectScreenshotsEditor } from "./ProjectScreenshotsEditor";
 import { SubmitFormButton } from "./SubmitFormButton";
 import { SearchableMultiSelect } from "../../components/SearchableMultiSelect";
 import { ProjectMainImageField } from "@/features/projects/components/ProjectMainImageField";
+import { ResumeBulletEditor } from "./ResumeBulletEditor";
 
 type AdminProjectFormProps = {
     initialProject?: Project | null;
@@ -51,6 +52,13 @@ export function AdminProjectForm({
                     alt: screenshot.alt,
                     sortOrder: index,
                 })) ?? [],
+            featuredInResume: initialProject?.featuredInResume ?? false,
+
+            resumeRoleEn: initialProject?.resumeRole?.en ?? "",
+            resumeRoleEs: initialProject?.resumeRole?.es ?? "",
+
+            resumeBulletsEn: initialProject?.resumeBullets?.en ?? [],
+            resumeBulletsEs: initialProject?.resumeBullets?.es ?? [],
         }),
         [initialProject]
     );
@@ -224,6 +232,66 @@ export function AdminProjectForm({
                     <input type="checkbox" {...register("featured")} />
                     Featured project
                 </label>
+
+            </section>
+            <section className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+                <div className="mb-4">
+                    <h3 className="text-base font-semibold text-white">Resume</h3>
+                    <p className="mt-1 text-sm text-white/55">
+                        Content used only in the generated CV.
+                    </p>
+                </div>
+
+                <label className="flex items-center gap-3 text-sm text-white/80">
+                    <input
+                        type="checkbox"
+                        {...register("featuredInResume")}
+                        className="h-4 w-4"
+                    />
+                    Show this project in resume
+                </label>
+
+                <div className="mt-4 grid gap-4 md:grid-cols-2">
+                    <label className="grid gap-1.5">
+                        <span className="text-sm font-medium text-white/75">
+                            Resume role EN
+                        </span>
+                        <input
+                            {...register("resumeRoleEn")}
+                            placeholder="Full Stack Developer | Stack: Go, React, PostgreSQL"
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white"
+                        />
+                    </label>
+
+                    <label className="grid gap-1.5">
+                        <span className="text-sm font-medium text-white/75">
+                            Resume role ES
+                        </span>
+                        <input
+                            {...register("resumeRoleEs")}
+                            placeholder="Full Stack Developer | Stack: Go, React, PostgreSQL"
+                            className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white"
+                        />
+                    </label>
+                </div>
+
+                <div className="mt-4 grid gap-4 md:grid-cols-2">
+                    <ResumeBulletEditor
+                        label="Resume bullets EN"
+                        control={control}
+                        register={register}
+                        setValue={setValue}
+                        name="resumeBulletsEn"
+                    />
+
+                    <ResumeBulletEditor
+                        label="Resume bullets ES"
+                        control={control}
+                        register={register}
+                        setValue={setValue}
+                        name="resumeBulletsEs"
+                    />
+                </div>
             </section>
 
             <ProjectMainImageField

@@ -46,6 +46,16 @@ export type Project = {
     status: ProjectStatus;
     technologies: string[];
     featured?: boolean;
+
+    featuredInResume?: boolean;
+    resumeRole?: {
+        en?: string;
+        es?: string;
+    };
+    resumeBullets?: {
+        en: string[];
+        es: string[];
+    };
 }
 
 export type ExperienceItem = {
