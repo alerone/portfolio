@@ -32,6 +32,28 @@ export const links: Route.LinksFunction = () => [
     },
 ];
 
+function restoreGitHubPagesRoute() {
+    if (typeof window === "undefined") return;
+
+    const url = new URL(window.location.href);
+    const redirectedPath = url.searchParams.get("p");
+
+    if (!redirectedPath) return;
+
+    url.searchParams.delete("p");
+
+    const cleanSearch = url.searchParams.toString();
+    const nextUrl =
+        window.location.origin +
+        window.location.pathname +
+        redirectedPath +
+        (cleanSearch ? `?${cleanSearch}` : "");
+
+    window.history.replaceState(null, "", nextUrl);
+}
+
+restoreGitHubPagesRoute();
+
 export function Layout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
