@@ -42,10 +42,7 @@ function restoreGitHubPagesRoute() {
 
     url.searchParams.delete("p");
 
-    const basePath = url.pathname.endsWith("/")
-        ? url.pathname.slice(0, -1)
-        : url.pathname;
-
+    const basePath = "/portfolio";
     const appPath = redirectedPath.startsWith("/")
         ? redirectedPath
         : `/${redirectedPath}`;
@@ -56,7 +53,8 @@ function restoreGitHubPagesRoute() {
         window.location.origin +
         basePath +
         appPath +
-        (cleanSearch ? `?${cleanSearch}` : "");
+        (cleanSearch ? `?${cleanSearch}` : "") +
+        url.hash;
 
     window.history.replaceState(null, "", nextUrl);
 }
