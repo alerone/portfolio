@@ -42,11 +42,20 @@ function restoreGitHubPagesRoute() {
 
     url.searchParams.delete("p");
 
+    const basePath = url.pathname.endsWith("/")
+        ? url.pathname.slice(0, -1)
+        : url.pathname;
+
+    const appPath = redirectedPath.startsWith("/")
+        ? redirectedPath
+        : `/${redirectedPath}`;
+
     const cleanSearch = url.searchParams.toString();
+
     const nextUrl =
         window.location.origin +
-        window.location.pathname +
-        redirectedPath +
+        basePath +
+        appPath +
         (cleanSearch ? `?${cleanSearch}` : "");
 
     window.history.replaceState(null, "", nextUrl);
