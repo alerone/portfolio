@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+set -a 
+source "$SCRIPT_DIR/../.env"
+set +a
+
+if [[ $# -ge 1 ]]; then
+    npx supabase login
+    npx supabase link --project-ref $SUPABASE_REF
+fi
+
+npx supabase functions deploy notify-visit
+
+

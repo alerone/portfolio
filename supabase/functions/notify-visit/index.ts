@@ -69,6 +69,7 @@ Deno.serve(async (req) => {
         language?: string;
         timezone?: string;
         screen?: string;
+        userAgent?: string;
     };
 
     try {
@@ -86,6 +87,7 @@ Deno.serve(async (req) => {
     const language = body.language ?? "unknown";
     const timezone = body.timezone ?? "unknown";
     const screen = body.screen ?? "unknown";
+    const userAgent = body.userAgent ?? "unknown"
 
     const message = [
         "👀 <b>Nueva visita al portfolio</b>",
@@ -96,6 +98,7 @@ Deno.serve(async (req) => {
         `🌍 <b>Idioma:</b> ${escapeHtml(language)}`,
         `🕒 <b>Zona horaria:</b> ${escapeHtml(timezone)}`,
         `🖥️ <b>Pantalla:</b> ${escapeHtml(screen)}`,
+        `🧭 <b>User agent:</b> <code>${escapeHtml(userAgent)}</code>`,
         "",
         `⏱️ <b>Hora:</b> ${formatDateTime()}`,
     ].join("\n");

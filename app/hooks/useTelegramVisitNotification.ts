@@ -2,7 +2,7 @@ import { isOwnerDevice } from "@/utils/visitor-notifications";
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 
-const NOTIFICATION_STORAGE_KEY = "portfolio:last-visit-notification";
+export const NOTIFICATION_STORAGE_KEY = "portfolio:last-visit-notification";
 const NOTIFICATION_COOLDOWN_MS = 1000 * 60 * 30;
 const DEBUG_VISITS = true
 
