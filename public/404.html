@@ -5,17 +5,21 @@
     <title>Redirecting...</title>
     <script>
       (function () {
-        var segmentCount = 1; // /portfolio
-        var locationPath = window.location.pathname;
-        var repoBase = locationPath.split("/").slice(0, 1 + segmentCount).join("/");
-        var rest = locationPath.slice(repoBase.length);
-        var search = window.location.search || "";
-        var hash = window.location.hash || "";
+        var repo = "/portfolio";
+        var path = window.location.pathname;
+
+        var rest = path.startsWith(repo)
+          ? path.slice(repo.length)
+          : path;
+
+        if (!rest.startsWith("/")) {
+          rest = "/" + rest;
+        }
 
         var target =
-          repoBase +
+          repo +
           "/?p=" +
-          encodeURIComponent(rest + search + hash);
+          encodeURIComponent(rest + window.location.search + window.location.hash);
 
         window.location.replace(target);
       })();
