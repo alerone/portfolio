@@ -12,7 +12,7 @@ function shouldSkipNotification() {
     if (isLocalhost()) return true;
 
     const isBot =
-        /bot|crawler|spider|crawling|preview|facebookexternalhit|whatsapp|telegrambot/i.test(
+        /bot|crawler|spider|crawling|preview|facebookexternalhit|whatsapp|telegrambot|Google-Read-Aloud/i.test(
             navigator.userAgent
         );
     if (isOwnerDevice()) return true;
