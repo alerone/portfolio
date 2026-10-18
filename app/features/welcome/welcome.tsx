@@ -20,7 +20,7 @@ export function Welcome() {
                             </h1>
 
                             <p className="mt-3 text-sm text-white/72 xl:text-base">
-                                Computer Science graduate currently pursuing a Master’s in Computer Engineering.
+                                Junior Full-Stack Web Developer / Backend Developer | Java · Spring Boot · Go · React · TypeScript | Valencia or Remote
                             </p>
 
                             <p className="mt-5 max-w-2xl text-sm xl:text-base text-white/70">
